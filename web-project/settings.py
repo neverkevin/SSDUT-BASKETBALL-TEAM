@@ -9,7 +9,7 @@ HANDLERS = (
     'web',
 )
 
-LOGIN_URL = "/login/"
+LOGIN_URL = "/login"
 COOKIE_SECRET = "/hncZPV7TVaxY/krcQFc9Ujm6blLPk9Bsh6xdIYfAuc="
 
 MYSQL_HOST = 'localhost'

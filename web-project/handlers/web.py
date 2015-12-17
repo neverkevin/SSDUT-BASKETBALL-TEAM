@@ -40,6 +40,12 @@ class AddContactsHandler(BaseHandler):
         self.redirect('/add_contacts', permanent=True)
 
 
+@route(r'/login$', name='login')
+class LoginHandler(BaseHandler):
+    def get(self):
+        self.render('login.html', url=url)
+
+
 @route(r'/test_model$', name='test_model')
 class TestModelHandler(BaseHandler):
     def get(self):
