@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% include head.html %}
+
+	<body>
+		{% module NavbarSSDUT(url) %}
+		<div class="container">
+			<div class="row row-offcanvas row-offcanvas-right">
+				<div class="col-xs-12 col-sm-9">
+					<form action="/add_contacts" method="post" class="form-horizontal" role="form">
+						<div class="form-group">
+							<label for="firstname" class="col-sm-2 control-label">名字</label>
+							<div class="col-sm-10">
+								<input type="text" name="name" class="form-control" id="firstname" 
+												   placeholder="请输入名字">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="grade" class="col-sm-2 control-label">年级</label>
+							<div class="col-sm-10">
+								<input type="text" name="grade" class="form-control" id="grade" 
+												   placeholder="请输入年级">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="phonenum" class="col-sm-2 control-label">联系电话</label>
+							<div class="col-sm-10">
+								<input type="text" name="phonenum" class="form-control" id="firstname" 
+												   placeholder="请输入联系电话">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="place" class="col-sm-2 control-label">所在地</label>
+							<div class="col-sm-10">
+								<input type="text" name="place" class="form-control" id="firstname" 
+												   placeholder="请输入所在地">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-primary add_con">提交</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				{% include right_navigation.html %}
+			</div>
+		{% include foot.html %}

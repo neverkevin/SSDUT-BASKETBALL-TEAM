@@ -1,0 +1,44 @@
+html, body{
+	margin: 0;
+	padding: 0;
+}
+.main-contact{
+	top: 40px;
+	color: #173D48;
+	text-decoration: none;
+	margin: 0 auto;
+	max-width: 730px;
+	padding: 0.5rem 1.5rem;
+}
+#add-contact{
+	top: 6px;
+	color: #173D48;
+	text-decoration: none;
+	margin: 0 auto;
+	max-width: 730px;
+	padding: 0.5rem 1.5rem;
+}
+#table{
+	top: 6px;
+	color: #173D48;
+	text-decoration: none;
+	margin: 0 auto;
+	max-width: 730px;
+	padding: 0.5rem 1.5rem;
+}
+th,td{
+	padding: 10px !important;
+	text-align: left !important;
+}
+
+#add-content{
+	font-family: VerDana;
+	text-align: left;
+	padding: 8px;
+}
+
+
+.form-input{
+	padding:6px;
+	text-align: left;
+}

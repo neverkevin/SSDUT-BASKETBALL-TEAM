@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+	{% include head.html %}
+		
+	<body>
+		{% module NavbarSSDUT(url) %}
+		<div class="container">
+
+			<div class="row row-offcanvas row-offcanvas-right">
+
+				<div class="col-xs-12 col-sm-9">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>姓名</th>
+								<th>年级</th>
+								<th>联系电话</th>
+								<th>所在地</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for contact in contacts %}
+							<tr>
+								<td>{{ escape(contact['name']) }}</td>
+								<td>{{ escape(contact['grade']) }}</td>
+								<td>{{ escape(contact['phonenum']) }}</td>
+								<td>{{ escape(contact['place']) }}</td>
+								</td>
+							</tr>
+							{% end %}
+						</tbody>
+					</table>
+				</div><!--/.col-xs-12.col-sm-9-->
+
+				{% include right_navigation.html %}
+			</div><!--/row-->	
+
+		{% include foot.html %}
+
