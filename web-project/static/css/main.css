@@ -4,3 +4,8 @@ body{
 .form-control{
 	width: 240px;
 }
+.alert{
+    position: relative;
+    width: 430px;
+    left: 60px;
+}

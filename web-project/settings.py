@@ -2,8 +2,8 @@ import os
 
 _ROOT = os.path.dirname(__file__)
 
-TITLE = u"SSDUT 篮球队"
-SUB_TITLE = "SSDUT 篮球队"
+TITLE = "SSDUT BASKETBALL"
+SUB_TITLE = "SSDUT BASKETBALL"
 DOMAIN_NAME = "basketball.SSDUT.cn"
 HANDLERS = (
     'web',
