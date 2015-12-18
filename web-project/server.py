@@ -15,7 +15,7 @@ from operations.routes import route
 #from mongoengine.connection import connect
 #from pymongo import MongoClient
 
-define("debug", default=False, help="run in debug mode", type=bool)
+define("debug", default=True, help="run in debug mode", type=bool)
 define("port", default=2358, help="run on the given port", type=int)
 define("showurls", default=False, help="Show all routed URLs", type=bool)
 define("database_name", default=settings.DEFAULT_DATABASE_NAME, help="database name")
@@ -30,6 +30,7 @@ class Application(tornado.web.Application):
             static_path=os.path.join(os.path.dirname(__file__), 'static'),
             ui_modules=uimodules,
             cookie_secret=settings.COOKIE_SECRET,
+            xsrf_cookies=True,
             login_url=settings.LOGIN_URL,
             debug=options.debug,
             webmaster=settings.WEBMASTER,
