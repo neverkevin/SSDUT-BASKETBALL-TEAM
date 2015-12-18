@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import tornado
 from baseHandler import BaseHandler
 from operations.routes import route
 from tornado import gen
@@ -27,6 +28,7 @@ class MingrentangHandler(BaseHandler):
 
 @route(r'/add_contacts$', name='add_contacts')
 class AddContactsHandler(BaseHandler):
+    @tornado.web.authenticated
     def get(self):
         url = self.request.uri
         self.render('add_contacts.html', url=url)
@@ -45,6 +47,12 @@ class LoginHandler(BaseHandler):
     def get(self):
         url = self.request.uri
         self.render('login.html', url=url)
+
+    def post(self):
+        username = self.get_argument('username')
+        password = self.get_argument('password')
+        self.set_secure_cookie("user", self.get_argument("username"))
+        self.redirect("/add_contacts", permanent=True)
 
 
 @route(r'/test_model$', name='test_model')

@@ -8,7 +8,7 @@ class BaseHandler(tornado.web.RequestHandler):
         '''
             auth user
         '''
-        return self.get_secure_cookie("name")
+        return self.get_secure_cookie("user")
 
     def get_login_url(self):
         '''
