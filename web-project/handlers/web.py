@@ -43,6 +43,7 @@ class AddContactsHandler(BaseHandler):
 @route(r'/login$', name='login')
 class LoginHandler(BaseHandler):
     def get(self):
+        url = self.request.uri
         self.render('login.html', url=url)
 
 

@@ -4,6 +4,7 @@
 from mongoengine import *
 import torndb
 import MySQLdb
+import pymongo
 
 class TestModel(Document):
 

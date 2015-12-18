@@ -12,7 +12,8 @@ import uimodules
 import settings
 import torndb
 from operations.routes import route
-from mongoengine.connection import connect
+#from mongoengine.connection import connect
+#from pymongo import MongoClient
 
 define("debug", default=False, help="run in debug mode", type=bool)
 define("port", default=2358, help="run on the given port", type=int)
@@ -61,7 +62,7 @@ def init():
     for handler_name in settings.HANDLERS:
         __import__('handlers.%s' % handler_name, globals(), locals(), [], -1)
 
-    connect(options.database_name)
+    #connect(options.database_name)
 
 
 if __name__ == '__main__':
