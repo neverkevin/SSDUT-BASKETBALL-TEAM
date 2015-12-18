@@ -5,9 +5,8 @@ import tornado
 from baseHandler import BaseHandler
 from operations.routes import route
 from tornado import gen
-from models.model import TestModel
-from models.model import GetContacts
-from models.model import AddContacts
+import time
+from models.model import *
 
 
 @gen.coroutine
@@ -51,8 +50,12 @@ class LoginHandler(BaseHandler):
     def post(self):
         username = self.get_argument('username')
         password = self.get_argument('password')
-        self.set_secure_cookie("user", self.get_argument("username"))
-        self.redirect("/add_contacts", permanent=True)
+        tag = login(self.application.mysql_db, username, password)
+        if tag:
+            self.set_secure_cookie("user", self.get_argument("username"))
+            self.redirect("/add_contacts", permanent=True)
+        else:
+            self.redirect("/login", permanent=True)
 
 
 @route(r'/test_model$', name='test_model')

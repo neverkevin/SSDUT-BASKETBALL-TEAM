@@ -7,7 +7,8 @@ class Navbar(tornado.web.UIModule):
     def render(self, brand, navs):
         return self.render_string("header.html", brand=brand, navs=navs)
 
-class NavbarSSDUT(Navbar):
+
+class NavbarHeader(Navbar):
     def render(self, url):
         brand = {}
         brand['href'] = '/'
@@ -28,3 +29,22 @@ class NavbarSSDUT(Navbar):
         elif url == '/login':
             navs[2]['active'] = True
         return Navbar.render(self, brand, navs)
+
+
+class Grade(tornado.web.UIModule):
+    def render(self, grades):
+        return self.render_string("right_navigation.html", grades=grades)
+
+
+class GradeRight(Grade):
+    def render(self, url):
+        grades = []
+        for i in xrange(len(xrange(2007, 2016))):
+            grades.append({})
+
+        for i, n in enumerate(xrange(2007, 2016)):
+            grades[i]['name'] = n
+            grades[i]['url'] = '/%s' % n
+            if url == '/%s':
+                grades[i]['active'] = True
+        return Grade.render(self, grades)
