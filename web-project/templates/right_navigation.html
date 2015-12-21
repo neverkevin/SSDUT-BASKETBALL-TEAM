@@ -4,9 +4,9 @@
     <a class="list-group-item active">History</a>
     {% for grade in grades %}
       {% if grade.has_key('active') %}
-      <a href="/{{ grade['name'] }}" class="list-group-item active">{{ grade['name'] }}</a>
+      <a href="{{ grade['url'] }}" class="list-group-item active">{{ grade['name'] }}</a>
       {% else %}
-      <a href="/{{ grade['name'] }}" class="list-group-item">{{ grade['name'] }}</a>
+      <a href="{{ grade['url'] }}" class="list-group-item">{{ grade['name'] }}</a>
       {% end %}
     {% end %}
 	</div>

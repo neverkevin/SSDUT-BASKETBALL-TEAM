@@ -19,7 +19,10 @@
 						<a href="{{ nav['href'] }}">{{ nav['name'] }}</a>
 					</li>
 				{% end %}
-			</ul>
+            </ul>
+            <form class="navbar-form navbar-right">
+                <a href="{{ login['href'] }}" class="btn btn-success">{{ login['name'] }}</a>
+            </form>
 		</div><!-- /.nav-collapse -->
 	</div><!-- /.container -->
 </nav>

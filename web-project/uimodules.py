@@ -4,22 +4,23 @@
 import tornado
 
 class Navbar(tornado.web.UIModule):
-    def render(self, brand, navs):
-        return self.render_string("header.html", brand=brand, navs=navs)
+    def render(self, brand, navs, login):
+        return self.render_string("header.html", brand=brand, navs=navs, login=login)
 
 
 class NavbarHeader(Navbar):
     def render(self, url):
         brand = {}
-        brand['href'] = '/'
         brand['name'] = 'SSDUT 篮球队'
-        navs = [{ }, { }, { }]
+        brand['href'] = '/'
+        navs = [{ }, { }]
         navs[0]['name'] = '名人堂'
         navs[0]['href'] = '/mingrentang'
         navs[1]['name'] = '添加联系人'
         navs[1]['href'] = '/add_contacts'
-        navs[2]['name'] = '登录'
-        navs[2]['href'] = '/login'
+        login = {}
+        login['name'] = '登录'
+        login['href'] = '/login'
         if url == '/':
             brand['active'] = True
         elif url == '/mingrentang':
@@ -27,8 +28,8 @@ class NavbarHeader(Navbar):
         elif url == '/add_contacts':
             navs[1]['active'] = True
         elif url == '/login':
-            navs[2]['active'] = True
-        return Navbar.render(self, brand, navs)
+            login['active'] = True
+        return Navbar.render(self, brand, navs, login)
 
 
 class Grade(tornado.web.UIModule):
@@ -39,12 +40,12 @@ class Grade(tornado.web.UIModule):
 class GradeRight(Grade):
     def render(self, url):
         grades = []
-        for i in xrange(len(xrange(2007, 2016))):
+        for i in xrange(len(xrange(2006, 2016))):
             grades.append({})
 
-        for i, n in enumerate(xrange(2007, 2016)):
+        for i, n in enumerate(xrange(2006, 2016)):
             grades[i]['name'] = n
-            grades[i]['url'] = '/%s' % n
-            if url == '/%s':
+            grades[i]['url'] = '/history/%s' % n
+            if url == '/history/%s':
                 grades[i]['active'] = True
         return Grade.render(self, grades)

@@ -1,17 +1,16 @@
 #!/usr/bin/env python
 # encoding=utf-8
 
-from mongoengine import *
 import torndb
-import MySQLdb
-import pymongo
+#import MySQLdb
+#import pymongo
 
-class TestModel(Document):
-
-    """Test Mongoengine"""
-
-    title = StringField(required=True)
-    text = StringField()
+#class TestModel(Document):
+#
+#    """Test Mongoengine"""
+#
+#    title = StringField(required=True)
+#    text = StringField()
 
 
 def GetContacts(mysql_db):

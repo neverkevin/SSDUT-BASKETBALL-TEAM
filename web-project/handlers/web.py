@@ -25,6 +25,12 @@ class MingrentangHandler(BaseHandler):
         self.render('mingrentang.html', contacts=contacts, url=url)
 
 
+@route(r'/history/([0-9]+)$', name='history/([0-9]+)')
+class HistoryHandler(BaseHandler):
+    def get(self, history_id):
+        self.write("You request the history_year: " + history_id)
+
+
 @route(r'/add_contacts$', name='add_contacts')
 class AddContactsHandler(BaseHandler):
     @tornado.web.authenticated
