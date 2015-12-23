@@ -1,5 +1,8 @@
 body{
 }
+.container{
+    padding-top: 100px;
+}
 .alert{
     position: relative;
     width: 430px;
