@@ -15,7 +15,7 @@ COOKIE_SECRET = "/hncZPV7TVaxY/krcQFc9Ujm6blLPk9Bsh6xdIYfAuc="
 MYSQL_HOST = 'localhost'
 MYSQL_DATABASE_NAME = 'SSDUT'
 MYSQL_USER_NAME = 'root'
-MYSQL_PASS_WORD = 'ssdut'
+MYSQL_PASS_WORD = 'root'
 
 MONGO_HOST = 'localhost'
 MONGO_PORT = 27017
