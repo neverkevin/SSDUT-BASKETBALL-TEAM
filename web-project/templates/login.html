@@ -3,11 +3,11 @@
   <body>
 		{% module NavbarHeader(url) %}
     <div class="container">
-      {% module xsrf_form_html() %}
       <div class="well bs-component" style="margin:0 auto; width:500px;">
         <form class="form-horizontal">
           <fieldset>
             <legend>登录</legend>
+            {% module xsrf_form_html() %}
             <div class="form-group is-empty">
               <label for="inputEmail" class="col-md-2 control-label">邮箱账号</label>
               <div class="col-md-10">
@@ -33,4 +33,3 @@
         </form>
       </div>
        {% include foot.html %}
-

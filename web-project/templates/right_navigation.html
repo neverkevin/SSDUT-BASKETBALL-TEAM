@@ -4,7 +4,7 @@
     <div class="btn-group-vertical">
       {% for grade in grades %}
         {% if grade.has_key('active') %}
-        <a href="{{ grade['url'] }}" class="btn btn-raised btn-lg">{{ grade['name'] }}<div class="ripple-container active"></div></a>
+        <a href="{{ grade['url'] }}" class="btn btn-raised btn-lg active">{{ grade['name'] }}<div class="ripple-container"></div></a>
         {% else %}
         <a href="{{ grade['url'] }}" class="btn btn-raised btn-lg">{{ grade['name'] }}<div class="ripple-container"></div></a>
         {% end %}

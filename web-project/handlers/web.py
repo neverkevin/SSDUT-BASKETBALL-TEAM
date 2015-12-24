@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import tornado
@@ -28,7 +28,8 @@ class MingrentangHandler(BaseHandler):
 @route(r'/history/([0-9]+)$', name='history/([0-9]+)')
 class HistoryHandler(BaseHandler):
     def get(self, history_id):
-        self.write("You request the history_year: " + history_id)
+        url = self.request.uri
+        self.render('history.html', history_id = history_id, url=url)
 
 
 @route(r'/add_contacts$', name='add_contacts')

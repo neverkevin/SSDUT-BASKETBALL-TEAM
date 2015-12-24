@@ -29,6 +29,8 @@ class NavbarHeader(Navbar):
             navs[1]['active'] = True
         elif url == '/login':
             login['active'] = True
+        else:
+            pass
         return Navbar.render(self, brand, navs, login)
 
 
@@ -46,6 +48,6 @@ class GradeRight(Grade):
         for i, n in enumerate(xrange(2006, 2016)):
             grades[i]['name'] = n
             grades[i]['url'] = '/history/%s' % n
-            if url == '/history/%s':
+            if url == '/history/%s' % n:
                 grades[i]['active'] = True
         return Grade.render(self, grades)
