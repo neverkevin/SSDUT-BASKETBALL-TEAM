@@ -2,21 +2,11 @@
 # encoding=utf-8
 
 import torndb
-#import MySQLdb
-#import pymongo
-
-#class TestModel(Document):
-#
-#    """Test Mongoengine"""
-#
-#    title = StringField(required=True)
-#    text = StringField()
 
 
 def GetContacts(mysql_db):
     contacts = mysql_db.query('select * from content')
     return contacts
-
 
 
 def AddContacts(mysql_db, name, grade, phonenum, place):
