@@ -14,7 +14,11 @@ from models.model import *
 class MainHandler(BaseHandler):
     def get(self):
         url = self.request.uri
-        self.render('index.html', url=url)
+        if self.get_secure_cookie("user"):
+            username = tornado.escape.xhtml_escape(self.current_user)
+            self.render('index.html', url=url, username=username)
+        else:
+            self.render('index.html', url=url, username="登录")
 
 
 @route(r'/mingrentang$', name='mingrentang')
@@ -22,14 +26,22 @@ class MingrentangHandler(BaseHandler):
     def get(self):
         url = self.request.uri
         contacts = GetContacts(self.application.mysql_db)
-        self.render('mingrentang.html', contacts=contacts, url=url)
+        if self.get_secure_cookie("user"):
+            username = tornado.escape.xhtml_escape(self.current_user)
+            self.render('mingrentang.html', contacts=contacts, url=url, username=username)
+        else:
+            self.render('mingrentang.html', contacts=contacts, url=url, username="登录")
 
 
 @route(r'/history/([0-9]+)$', name='history/([0-9]+)')
 class HistoryHandler(BaseHandler):
     def get(self, history_id):
         url = self.request.uri
-        self.render('history.html', history_id = history_id, url=url)
+        if self.get_secure_cookie("user"):
+            username = tornado.escape.xhtml_escape(self.current_user)
+            self.render('history.html', history_id=history_id, url=url, username=username)
+        else:
+            self.render('history.html', history_id=history_id, url=url, username="登录")
 
 
 @route(r'/add_contacts$', name='add_contacts')
@@ -37,7 +49,12 @@ class AddContactsHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         url = self.request.uri
-        self.render('add_contacts.html', url=url)
+        if self.get_secure_cookie("user"):
+            username = tornado.escape.xhtml_escape(self.current_user)
+            self.render('add_contacts.html', url=url, username=username)
+        else:
+            self.render('add_contacts.html', url=url, username="登录")
+
 
     def post(self):
         name = self.get_argument('name')
@@ -52,16 +69,22 @@ class AddContactsHandler(BaseHandler):
 class LoginHandler(BaseHandler):
     def get(self):
         url = self.request.uri
-        self.render('login.html', url=url)
+        self.render('login.html', url=url, username="登录")
 
     def post(self):
         username = self.get_argument('username')
         password = self.get_argument('password')
         tag = login(self.application.mysql_db, username, password)
-        if tag:
-            self.set_secure_cookie("user", self.get_argument("username"))
+        if tag == True:
+            nickname = get_nickname(self.application.mysql_db, username)
+            self.set_secure_cookie("user", nickname)
             self.redirect("/add_contacts", permanent=True)
         else:
             self.redirect("/login", permanent=True)
 
 
+@route(r'/logout$', name='logout')
+class LogoutHandler(BaseHandler):
+    def get(self):
+        self.clear_all_cookies()
+        self.redirect("/", permanent=True)

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 	{% include head.html %}
   <body>
-		{% module NavbarHeader(url) %}
+		{% module NavbarHeader(url, username) %}
     <div class="container">
       <div class="well bs-component" style="margin:0 auto; width:500px;">
         <form class="form-horizontal" method="post" action="/login">
@@ -11,7 +11,7 @@
             <div class="form-group is-empty">
               <label for="inputEmail" class="col-md-2 control-label">邮箱账号</label>
               <div class="col-md-10">
-                <input type="email" name="username" class="form-control" id="inputEmail" placeholder="Email">
+                <input type="email" name="username" class="form-control" id="inputEmail" placeholder="Email" required>
               </div>
               <span class="material-input"></span>
             </div>
@@ -19,7 +19,7 @@
               <label for="inputPassword" class="col-md-2 control-label">密码</label>
 
               <div class="col-md-10">
-                <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password">
+                <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" required>
               </div>
               <span class="material-input"></span>
             </div>

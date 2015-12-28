@@ -9,7 +9,7 @@ class Navbar(tornado.web.UIModule):
 
 
 class NavbarHeader(Navbar):
-    def render(self, url):
+    def render(self, url, username):
         brand = {}
         brand['name'] = 'SSDUT 篮球队'
         brand['href'] = '/'
@@ -19,7 +19,7 @@ class NavbarHeader(Navbar):
         navs[1]['name'] = '添加联系人'
         navs[1]['href'] = '/add_contacts'
         login = {}
-        login['name'] = '登录'
+        login['name'] = username
         login['href'] = '/login'
         if url == '/':
             brand['active'] = True

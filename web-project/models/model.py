@@ -26,3 +26,9 @@ def login(mysql_db, username, password):
             return False
     else:
         return False
+
+
+def get_nickname(mysql_db, username):
+        getnicknameSQL = 'select nickname from user where username=%s'
+        nickname = mysql_db.get(getnicknameSQL, username)
+        return nickname['nickname']

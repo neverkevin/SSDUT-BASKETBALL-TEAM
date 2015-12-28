@@ -31,12 +31,26 @@
           </div>
         </form>
         <ul class="nav navbar-nav navbar-right">
+          {% if login['name']!="登录" %}
+          <li class="dropdown">
+            <a href="{{ login['href'] }}" class="dropdown-toggle" data-toggle="dropdown", aria-expanded="false">
+              <i class="material-icons">account_box</i>
+              <span>{{ login['name'] }}</span>
+              <b class="caret"></b>
+              <div class="ripple-container"></div>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="/logout">logout</a></li>
+            </ul>
+          </li>
+          {% else %}
           <li>
             <a href="{{ login['href'] }}">
               <i class="material-icons">account_box</i>
-              <span>{{login['name'] }}</span>
+              <span>{{ login['name'] }}</span>
             </a>
           </li>
+          {% end %}
         </ul>
       </div>
     </div>
