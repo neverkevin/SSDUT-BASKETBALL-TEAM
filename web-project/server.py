@@ -12,13 +12,10 @@ import uimodules
 import settings
 import torndb
 from operations.routes import route
-#from mongoengine.connection import connect
-#from pymongo import MongoClient
 
 define("debug", default=True, help="run in debug mode", type=bool)
 define("port", default=2358, help="run on the given port", type=int)
 define("showurls", default=False, help="Show all routed URLs", type=bool)
-define("database_name", default=settings.DEFAULT_DATABASE_NAME, help="database name")
 
 
 class Application(tornado.web.Application):
@@ -63,7 +60,6 @@ def init():
     for handler_name in settings.HANDLERS:
         __import__('handlers.%s' % handler_name, globals(), locals(), [], -1)
 
-    #connect(options.database_name)
 
 
 if __name__ == '__main__':

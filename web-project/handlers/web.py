@@ -65,16 +65,3 @@ class LoginHandler(BaseHandler):
             self.redirect("/login", permanent=True)
 
 
-@route(r'/test_model$', name='test_model')
-class TestModelHandler(BaseHandler):
-    def get(self):
-        res = 'test_model title: <br>'
-        for test in TestModel.objects:
-            res += '<br>' + test.title
-        self.write(res)
-
-    def post(self):
-        title = self.get_argument('title')
-        text = self.get_argument('title')
-        tmp_model = TestModel(title, text)
-        tmp_model.save()
