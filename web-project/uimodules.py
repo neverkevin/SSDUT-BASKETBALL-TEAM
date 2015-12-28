@@ -13,11 +13,9 @@ class NavbarHeader(Navbar):
         brand = {}
         brand['name'] = 'SSDUT 篮球队'
         brand['href'] = '/'
-        navs = [{ }, { }]
+        navs = [{ }]
         navs[0]['name'] = '名人堂'
         navs[0]['href'] = '/mingrentang'
-        navs[1]['name'] = '添加联系人'
-        navs[1]['href'] = '/add_contacts'
         login = {}
         login['name'] = username
         login['href'] = '/login'
@@ -25,8 +23,6 @@ class NavbarHeader(Navbar):
             brand['active'] = True
         elif url == '/mingrentang':
             navs[0]['active'] = True
-        elif url == '/add_contacts':
-            navs[1]['active'] = True
         elif url == '/login':
             login['active'] = True
         else:

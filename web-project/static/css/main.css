@@ -47,3 +47,11 @@ body{
     float: right;
     width: 10%;
 }
+
+.jumbotron{
+    background-image: url("/static/img/11.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+
+}

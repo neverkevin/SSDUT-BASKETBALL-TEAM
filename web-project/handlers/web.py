@@ -23,6 +23,7 @@ class MainHandler(BaseHandler):
 
 @route(r'/mingrentang$', name='mingrentang')
 class MingrentangHandler(BaseHandler):
+    @tornado.web.authenticated
     def get(self):
         url = self.request.uri
         contacts = GetContacts(self.application.mysql_db)
@@ -47,22 +48,13 @@ class HistoryHandler(BaseHandler):
 @route(r'/add_contacts$', name='add_contacts')
 class AddContactsHandler(BaseHandler):
     @tornado.web.authenticated
-    def get(self):
-        url = self.request.uri
-        if self.get_secure_cookie("user"):
-            username = tornado.escape.xhtml_escape(self.current_user)
-            self.render('add_contacts.html', url=url, username=username)
-        else:
-            self.render('add_contacts.html', url=url, username="登录")
-
-
     def post(self):
         name = self.get_argument('name')
         grade = self.get_argument('grade')
         phonenum = self.get_argument('phonenum')
         place = self.get_argument('place')
         alert = AddContacts(self.application.mysql_db, name, grade, phonenum, place)
-        self.redirect('/add_contacts', permanent=True)
+        self.redirect('/mingrentang', permanent=True)
 
 
 @route(r'/login$', name='login')
@@ -78,7 +70,7 @@ class LoginHandler(BaseHandler):
         if tag == True:
             nickname = get_nickname(self.application.mysql_db, username)
             self.set_secure_cookie("user", nickname)
-            self.redirect("/add_contacts", permanent=True)
+            self.redirect("/mingrentang", permanent=True)
         else:
             self.redirect("/login", permanent=True)
 
@@ -86,5 +78,5 @@ class LoginHandler(BaseHandler):
 @route(r'/logout$', name='logout')
 class LogoutHandler(BaseHandler):
     def get(self):
-        self.clear_all_cookies()
+        self.clear_cookie("user")
         self.redirect("/", permanent=True)
