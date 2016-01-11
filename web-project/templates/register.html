@@ -4,15 +4,9 @@
 		{% module NavbarHeader(url, username) %}
     <div class="container">
       <div class="well bs-component" style="margin:0 auto; width:500px;">
-        <form class="form-horizontal" method="post" action="/login">
+        <form class="form-horizontal" method="post" action="/register">
           <fieldset>
-            {% if url == '/login?next=%2Fmingrentang' %}
-              <div class="alert alert-dismissible alert-warning">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <p>请登录后查看!</p>
-              </div>
-            {% end %}
-            <legend>登录</legend>
+            <legend>注册</legend>
             {% module xsrf_form_html() %}
             <div class="form-group is-empty">
               <label for="inputEmail" class="col-md-2 control-label">邮箱账号</label>
@@ -21,6 +15,16 @@
               </div>
               <span class="material-input"></span>
             </div>
+
+            <div class="form-group is-empty">
+              <label for="inputNickname" class="col-md-2 control-label">昵称</label>
+              <div class="col-md-10">
+                <input type="nickname" name="nickname" class="form-control"
+                id="inputNickname" placeholder="Nickname" required>
+              </div>
+              <span class="material-input"></span>
+            </div>
+
             <div class="form-group is-empty">
               <label for="inputPassword" class="col-md-2 control-label">密码</label>
 
@@ -29,10 +33,21 @@
               </div>
               <span class="material-input"></span>
             </div>
+
+            <div class="form-group is-empty">
+              <label for="inputSecretcode" class="col-md-2 control-label">激活码</label>
+
+              <div class="col-md-10">
+                <input type="Secretcode" name="Secretcode" class="form-control"
+                id="inputSecretcode" placeholder="暗号" required>
+              </div>
+              <span class="material-input"></span>
+            </div>
+
             <div class="form-group">
               <div class="col-md-10 col-md-offset-2">
-                <button type="submit" class="btn btn-raised btn-primary">登录</button>
-                <a href="/register" class="btn btn-raised btn-default">新用户注册</a>
+                <button type="submit" class="btn btn-raised btn-primary">注册</button>
+                <a href="/login" class="btn btn-raised btn-default">登录</a>
               </div>
             </div>
           </fieldset>

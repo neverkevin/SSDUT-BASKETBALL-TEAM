@@ -29,6 +29,15 @@ def login(mysql_db, username, password):
 
 
 def get_nickname(mysql_db, username):
-        getnicknameSQL = 'select nickname from user where username=%s'
-        nickname = mysql_db.get(getnicknameSQL, username)
-        return nickname['nickname']
+    getnicknameSQL = 'select nickname from user where username=%s'
+    nickname = mysql_db.get(getnicknameSQL, username)
+    return nickname['nickname']
+
+def register(mysql_db, username, nickname, password, secretcode):
+    if secretcode != 'secret':
+        print secretcode
+        return False
+    else:
+        sql = 'INSERT INTO USER (username, nickname, password) VALUES (%s, %s, %s)'
+        mysql_db.insert(sql, username, nickname, password)
+        return True

@@ -61,7 +61,6 @@ def init():
         __import__('handlers.%s' % handler_name, globals(), locals(), [], -1)
 
 
-
 if __name__ == '__main__':
     init()
     main()

@@ -5,7 +5,6 @@ import tornado
 from baseHandler import BaseHandler
 from operations.routes import route
 from tornado import gen
-import time
 from models.model import *
 
 
@@ -80,3 +79,25 @@ class LogoutHandler(BaseHandler):
     def get(self):
         self.clear_cookie("user")
         self.redirect("/", permanent=True)
+
+
+@route(r'/register$', name='register')
+class RegisterHandler(BaseHandler):
+    def get(self):
+        url = self.request.uri
+        if self.get_secure_cookie("user"):
+            username = tornado.escape.xhtml_escape(self.current_user)
+            self.render('register.html', url=url, username=username)
+        else:
+            self.render('register.html', url=url, username='登录')
+
+    def post(self):
+        username = self.get_argument('username')
+        nickname = self.get_argument('nickname')
+        password = self.get_argument('password')
+        secretcode = self.get_argument('Secretcode')
+        result = register(self.application.mysql_db, username, nickname, password, secretcode)
+        if result == True:
+            self.redirect("/login", permanent=True)
+        else:
+            self.redirect("/register", permanent=True)
