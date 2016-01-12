@@ -12,6 +12,12 @@
                 <p>请登录后查看!</p>
               </div>
             {% end %}
+            {% if error != None %}
+              <div class="alert alert-dismissible alert-warning">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <p>{{ escape(error) }}</p>
+              </div>
+            {% end %}
             <legend>登录</legend>
             {% module xsrf_form_html() %}
             <div class="form-group is-empty">
