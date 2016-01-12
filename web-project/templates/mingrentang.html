@@ -6,7 +6,7 @@
 			<div class="row row-offcanvas row-offcanvas-right">
         <div class="col-xs-12 col-sm-9">
 
-          {% if username=='manager' %}
+          {% if username=='你康神' %}
           <button class="btn btn-default btn-raised" data-toggle="modal"
                data-target="#complete-dialog">
               添加联系人
@@ -67,7 +67,15 @@
           </div>
           {% end %}
 
-          <div class="panel panel-primary" style="width:75%">
+          <div class="bs-component" style="width:75%">
+            <div class="progress">
+              <div class="progress-bar" style="width: {{ escape(total_contacts)}}%;"></div>
+            </div>
+          </div>
+          <div class="panel panel-default" style="width:75%">
+            <div class="panel-heading">
+              <h3 class="panel-title">名人堂</h3>
+            </div>
             <table class="table table-striped">
               <thead>
                 <tr>

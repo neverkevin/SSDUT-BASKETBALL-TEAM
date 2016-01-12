@@ -7,7 +7,8 @@ from tornado import gen
 @gen.coroutine
 def GetContacts(mysql_db):
     contacts = mysql_db.query('select * from content')
-    return contacts
+    total_contacts = mysql_db.query('select count(*) from content')
+    return contacts, str(total_contacts[0]['count(*)'])
 
 
 @gen.coroutine

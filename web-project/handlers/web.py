@@ -26,9 +26,11 @@ class MingrentangHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         url = self.request.uri
-        contacts = yield GetContacts(self.application.mysql_db)
+        contacts, total_contacts = yield GetContacts(self.application.mysql_db)
         username = tornado.escape.xhtml_escape(self.current_user)
-        self.render('mingrentang.html', contacts=contacts, url=url, username=username)
+        print total_contacts
+        self.render('mingrentang.html', contacts=contacts, url=url,
+                username=username, total_contacts = total_contacts)
 
 
 @route(r'/history/([0-9]+)$', name='history/([0-9]+)')
