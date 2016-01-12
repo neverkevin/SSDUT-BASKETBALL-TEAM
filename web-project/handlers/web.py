@@ -27,11 +27,9 @@ class MingrentangHandler(BaseHandler):
     def get(self):
         url = self.request.uri
         contacts = yield GetContacts(self.application.mysql_db)
-        if self.get_secure_cookie("user"):
-            username = tornado.escape.xhtml_escape(self.current_user)
-            self.render('mingrentang.html', contacts=contacts, url=url, username=username)
-        else:
-            self.render('mingrentang.html', contacts=contacts, url=url, username="登录")
+        username = tornado.escape.xhtml_escape(self.current_user)
+        self.render('mingrentang.html', contacts=contacts, url=url,
+                username=username)
 
 
 @route(r'/history/([0-9]+)$', name='history/([0-9]+)')
