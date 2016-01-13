@@ -2,46 +2,47 @@
 	{% include head.html %}
   <body>
 		{% module NavbarHeader(url, username) %}
-    <div class="container">
-      <div class="well bs-component" style="margin:0 auto; width:500px;">
-        <form class="form-horizontal" method="post" action="/login">
-          <fieldset>
-            {% if url == '/login?next=%2Fmingrentang' %}
-              <div class="alert alert-dismissible alert-warning">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <p>请登录后查看!</p>
+    <div class="main-shadow">
+      <div class="container">
+        <div class="well bs-component" style="margin:0 auto; width:500px;">
+          <form class="form-horizontal" method="post" action="/login">
+            <fieldset>
+              {% if url == '/login?next=%2Fmingrentang' %}
+                <div class="alert alert-dismissible alert-warning">
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                  <p>请登录后查看!</p>
+                </div>
+              {% end %}
+              {% if error != None %}
+                <div class="alert alert-dismissible alert-warning">
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                  <p>{{ escape(error) }}</p>
+                </div>
+              {% end %}
+              <legend>登录</legend>
+              {% module xsrf_form_html() %}
+              <div class="form-group is-empty">
+                <label for="inputEmail" class="col-md-2 control-label">邮箱账号</label>
+                <div class="col-md-10">
+                  <input type="email" name="username" class="form-control" id="inputEmail" placeholder="Email" required>
+                </div>
+                <span class="material-input"></span>
               </div>
-            {% end %}
-            {% if error != None %}
-              <div class="alert alert-dismissible alert-warning">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <p>{{ escape(error) }}</p>
-              </div>
-            {% end %}
-            <legend>登录</legend>
-            {% module xsrf_form_html() %}
-            <div class="form-group is-empty">
-              <label for="inputEmail" class="col-md-2 control-label">邮箱账号</label>
-              <div class="col-md-10">
-                <input type="email" name="username" class="form-control" id="inputEmail" placeholder="Email" required>
-              </div>
-              <span class="material-input"></span>
-            </div>
-            <div class="form-group is-empty">
-              <label for="inputPassword" class="col-md-2 control-label">密码</label>
+              <div class="form-group is-empty">
+                <label for="inputPassword" class="col-md-2 control-label">密码</label>
 
-              <div class="col-md-10">
-                <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" required>
+                <div class="col-md-10">
+                  <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" required>
+                </div>
+                <span class="material-input"></span>
               </div>
-              <span class="material-input"></span>
-            </div>
-            <div class="form-group">
-              <div class="col-md-10 col-md-offset-2">
-                <button type="submit" class="btn btn-raised btn-primary">登录</button>
-                <a href="/register" class="btn btn-raised btn-default">新用户注册</a>
+              <div class="form-group">
+                <div class="col-md-10 col-md-offset-2">
+                  <button type="submit" class="btn btn-raised btn-primary">登录</button>
+                  <a href="/register" class="btn btn-raised btn-default">新用户注册</a>
+                </div>
               </div>
-            </div>
-          </fieldset>
-        </form>
-      </div>
-       {% include foot.html %}
+            </fieldset>
+          </form>
+        </div>
+         {% include foot.html %}
