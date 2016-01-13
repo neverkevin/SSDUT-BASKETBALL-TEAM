@@ -1,47 +1,49 @@
 <!DOCTYPE html>
 {% include head.html %}
 <body>
-  {% module NavbarHeader(url, username) %}
-  
-  <div class="main-shadow">
-    <div class="container">
+{% module NavbarHeader(url, username) %}
 
-      <div class="row row-offcanvas row-offcanvas-right">
-        <div class="col-xs-12 col-sm-9">
-          <div class="jumbotron">
-          </div>
-          <div class="col-md-4" style="width: 50%; padding-top: 40px;">
-            <div class="bs-component">
-              <div class="list-group">
-                <div class="list-group-item">
-                  <div class="row-picture">
-                    <img class="circle" src="/static/img/sushuai.jpg" alt="icon">
-                  </div>
-                  <div class="row-content">
-                    <h4 class="list-group-item-heading">苏帅</h4>
+<div class="main-shadow">
+  <div class="container">
 
-                    <p class="list-group-item-text">软院最帅</p>
-                  </div>
+    <div class="row row-offcanvas row-offcanvas-right">
+      <div class="col-xs-12 col-sm-9">
+
+        <div class="jumbotron">
+        </div>
+
+        <div class="col-md-4" style="width: 50%; padding-top: 40px;">
+          <div class="bs-component">
+            <div class="list-group">
+              <div class="list-group-item">
+                <div class="row-picture">
+                  <img class="circle" src="/static/img/sushuai.jpg" alt="icon">
                 </div>
-                <div class="list-group-separator"></div>
-                <div class="list-group-item">
-                  <div class="row-picture">
-                    <img class="circle" src="/static/img/logo2.jpg" alt="icon">
-                  </div>
-                  <div class="row-content">
-                    <h4 class="list-group-item-heading">大主席</h4>
+                <div class="row-content">
+                  <h4 class="list-group-item-heading">苏帅</h4>
 
-                    <p class="list-group-item-text">啥也不说了，都在图里</p>
-                  </div>
+                  <p class="list-group-item-text">软院最帅</p>
                 </div>
-                <div class="list-group-separator"></div>
               </div>
+              <div class="list-group-separator"></div>
+              <div class="list-group-item">
+                <div class="row-picture">
+                  <img class="circle" src="/static/img/logo2.jpg" alt="icon">
+                </div>
+                <div class="row-content">
+                  <h4 class="list-group-item-heading">大主席</h4>
+
+                  <p class="list-group-item-text">啥也不说了，都在图里</p>
+                </div>
+              </div>
+              <div class="list-group-separator"></div>
             </div>
           </div>
         </div>
+      </div>
 
-        {% module GradeRight(url) %}
-			</div><!--/row-->
+      {% module GradeRight(url) %}
+    </div><!--/row-->
 
-		{% include foot.html %}
+    {% include foot.html %}
 

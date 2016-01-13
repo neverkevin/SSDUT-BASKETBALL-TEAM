@@ -8,9 +8,9 @@ import tornado.options
 import tornado.web
 from tornado.options import define, options
 import uimodules
+import torndb
 
 import settings
-import torndb
 from operations.routes import route
 
 define("debug", default=True, help="run in debug mode", type=bool)
