@@ -1,5 +1,0 @@
-(function(){
-    $('.register').click(function(){
-
-});
-})()
