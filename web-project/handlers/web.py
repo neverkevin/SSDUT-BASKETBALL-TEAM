@@ -1,4 +1,4 @@
-#/usr/bin/env python
+# /usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import tornado
@@ -28,9 +28,8 @@ class MingrentangHandler(BaseHandler):
         url = self.request.uri
         contacts, total_contacts = yield GetContacts(self.application.mysql_db)
         username = tornado.escape.xhtml_escape(self.current_user)
-        print total_contacts
         self.render('mingrentang.html', contacts=contacts, url=url,
-                username=username, total_contacts = total_contacts)
+                    username=username, total_contacts=total_contacts)
 
 
 @route(r'/history/([0-9]+)$', name='history/([0-9]+)')
@@ -41,6 +40,7 @@ class HistoryHandler(BaseHandler):
         if self.get_secure_cookie("user"):
             username = tornado.escape.xhtml_escape(self.current_user)
             self.render('history.html', history_id=history_id, url=url, username=username)
+
         else:
             self.render('history.html', history_id=history_id, url=url, username="登录")
 
@@ -54,7 +54,7 @@ class AddContactsHandler(BaseHandler):
         grade = self.get_argument('grade')
         phonenum = self.get_argument('phonenum')
         place = self.get_argument('place')
-        alert = yield AddContacts(self.application.mysql_db, name, grade, phonenum, place)
+        yield AddContacts(self.application.mysql_db, name, grade, phonenum, place)
         self.redirect('/mingrentang', permanent=True)
 
 
@@ -70,10 +70,11 @@ class LoginHandler(BaseHandler):
         username = self.get_argument('username')
         password = self.get_argument('password')
         result = yield login(self.application.mysql_db, username, password)
-        if result == True:
+        if result is True:
             nickname = yield get_nickname(self.application.mysql_db, username)
             self.set_secure_cookie("user", nickname)
             self.redirect("/mingrentang", permanent=True)
+
         else:
             url = self.request.uri
             self.render("login.html", url=url, username="登录", error=result)
@@ -95,6 +96,7 @@ class RegisterHandler(BaseHandler):
         if self.get_secure_cookie("user"):
             username = tornado.escape.xhtml_escape(self.current_user)
             self.render('register.html', url=url, username=username, error=None)
+
         else:
             self.render('register.html', url=url, username="登录", error=None)
 
@@ -105,8 +107,9 @@ class RegisterHandler(BaseHandler):
         password = self.get_argument('password')
         secretcode = self.get_argument('Secretcode')
         result = yield register(self.application.mysql_db, username, nickname, password, secretcode)
-        if result == True:
+        if result is True:
             self.redirect("/login", permanent=True)
+
         else:
             url = self.request.uri
             self.render("register.html", url=url, username="登录", error=result)
