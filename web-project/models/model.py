@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import hashlib
 from tornado import gen
 
 

@@ -4,30 +4,31 @@
 import tornado
 
 class Navbar(tornado.web.UIModule):
-    def render(self, brand, navs, login):
-        return self.render_string("header.html", brand=brand, navs=navs, login=login)
+    def render(self, brand, navs, login, username):
+        return self.render_string("header.html", username=username, brand=brand, navs=navs, login=login)
 
 
 class NavbarHeader(Navbar):
     def render(self, url, username):
+        username = username
         brand = {}
         brand['name'] = 'SSDUT 篮球队'
         brand['href'] = '/'
         navs = [{ }]
         navs[0]['name'] = '名人堂'
-        navs[0]['href'] = '/mingrentang'
+        navs[0]['href'] = '/HallofFame'
         login = {}
         login['name'] = username
         login['href'] = '/login'
         if url == '/':
             brand['active'] = True
-        elif url == '/mingrentang':
+        elif url == '/HallofFame':
             navs[0]['active'] = True
         elif url == '/login':
             login['active'] = True
         else:
             pass
-        return Navbar.render(self, brand, navs, login)
+        return Navbar.render(self, brand, navs, login, username)
 
 
 class Grade(tornado.web.UIModule):

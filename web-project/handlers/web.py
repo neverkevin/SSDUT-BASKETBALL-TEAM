@@ -10,7 +10,6 @@ from models.model import *
 
 @route(r'/$', name='index')
 class MainHandler(BaseHandler):
-    @gen.coroutine
     def get(self):
         url = self.request.uri
         if self.get_secure_cookie("user"):
@@ -20,21 +19,20 @@ class MainHandler(BaseHandler):
             self.render('index.html', url=url, username="登录")
 
 
-@route(r'/mingrentang$', name='mingrentang')
-class MingrentangHandler(BaseHandler):
+@route(r'/HallofFame$', name='mingrentang')
+class HallofFameHandler(BaseHandler):
     @gen.coroutine
     @tornado.web.authenticated
     def get(self):
         url = self.request.uri
         contacts, total_contacts = yield GetContacts(self.application.mysql_db)
         username = tornado.escape.xhtml_escape(self.current_user)
-        self.render('mingrentang.html', contacts=contacts, url=url,
+        self.render('HallofFame.html', contacts=contacts, url=url,
                     username=username, total_contacts=total_contacts)
 
 
 @route(r'/history/([0-9]+)$', name='history/([0-9]+)')
 class HistoryHandler(BaseHandler):
-    @gen.coroutine
     def get(self, history_id):
         url = self.request.uri
         if self.get_secure_cookie("user"):
@@ -55,12 +53,20 @@ class AddContactsHandler(BaseHandler):
         phonenum = self.get_argument('phonenum')
         place = self.get_argument('place')
         yield AddContacts(self.application.mysql_db, name, grade, phonenum, place)
-        self.redirect('/mingrentang', permanent=True)
+        self.redirect('/HallofFame', permanent=True)
+
+
+@route(r'/user/\S+', name='user')
+class UserHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        url = self.request.uri
+        username = tornado.escape.xhtml_escape(self.current_user)
+        self.render('user.html', url=url, username=username)
 
 
 @route(r'/login$', name='login')
 class LoginHandler(BaseHandler):
-    @gen.coroutine
     def get(self):
         url = self.request.uri
         self.render('login.html', url=url, username="登录", error=None)
@@ -73,7 +79,7 @@ class LoginHandler(BaseHandler):
         if result is True:
             nickname = yield get_nickname(self.application.mysql_db, username)
             self.set_secure_cookie("user", nickname)
-            self.redirect("/mingrentang", permanent=True)
+            self.redirect("/HallofFame", permanent=True)
 
         else:
             url = self.request.uri
@@ -90,7 +96,6 @@ class LogoutHandler(BaseHandler):
 
 @route(r'/register$', name='register')
 class RegisterHandler(BaseHandler):
-    @gen.coroutine
     def get(self):
         url = self.request.uri
         if self.get_secure_cookie("user"):

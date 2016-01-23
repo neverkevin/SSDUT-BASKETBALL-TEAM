@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import tornado.web
-import torndb
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -14,10 +13,10 @@ class BaseHandler(tornado.web.RequestHandler):
             auth user
         '''
         return self.get_secure_cookie("user")
-        #username = self.get_secure_cookie("user")
-        #if not username: return None
-        #return self.mysql_db.get("SELECT username FROM user WHERE username = %s",
-        #        username)
+        # username = self.get_secure_cookie("user")
+        # if not username: return None
+        # return self.mysql_db.get("SELECT username FROM user
+        #                          WHERE username = %s", username)
 
     def get_login_url(self):
         '''
