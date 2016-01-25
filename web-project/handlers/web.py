@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import tornado
+from tornado import gen
 from baseHandler import BaseHandler
 from operations.routes import route
-from tornado import gen
 from models.model import *
 
 

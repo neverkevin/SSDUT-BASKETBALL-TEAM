@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import hashlib
 from tornado import gen
 
 
@@ -13,7 +12,8 @@ def GetContacts(mysql_db):
 
 @gen.coroutine
 def AddContacts(mysql_db, name, grade, phonenum, place):
-    sql = 'insert into content (name, grade, phonenum, place) values (%s, %s, %s, %s)'
+    sql = 'insert into content (name, grade, phonenum, place) \
+            values (%s, %s, %s, %s)'
     mysql_db.insert(sql, name, grade, phonenum, place)
 
 
@@ -50,7 +50,8 @@ def register(mysql_db, username, nickname, password, secretcode):
         usernameSQL = 'select username from user where username=%s'
         is_username_exist = mysql_db.get(usernameSQL, username)
         if not is_username_exist:
-            sql = 'INSERT INTO USER (username, nickname, password) VALUES (%s, %s, %s)'
+            sql = 'INSERT INTO USER (username, nickname, password) \
+                    VALUES (%s, %s, %s)'
             mysql_db.insert(sql, username, nickname, password)
             return True
 
