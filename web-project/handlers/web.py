@@ -62,7 +62,10 @@ class UserHandler(BaseHandler):
     def get(self):
         url = self.request.uri
         username = tornado.escape.xhtml_escape(self.current_user)
-        self.render('user.html', url=url, username=username)
+        if url == '/user/{}'.format(username):
+            self.render('user.html', url=url, username=username)
+        else:
+            raise tornado.web.HTTPError(403)
 
 
 @route(r'/login$', name='login')

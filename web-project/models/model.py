@@ -50,7 +50,7 @@ def register(mysql_db, username, nickname, password, secretcode):
         usernameSQL = 'select username from user where username=%s'
         is_username_exist = mysql_db.get(usernameSQL, username)
         if not is_username_exist:
-            sql = 'INSERT INTO USER (username, nickname, password) \
+            sql = 'INSERT INTO user (username, nickname, password) \
                     VALUES (%s, %s, %s)'
             mysql_db.insert(sql, username, nickname, password)
             return True
