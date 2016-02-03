@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% include head.html %}
+<body>
+  {% module NavbarHeader(url, username) %}
+
+  <div class="main-shadow">
+    <div class="container">
+
+      <div class="row row-offcanvas row-offcanvas-right">
+        <div class="col-xs-12 col-sm-9">
+
+          <div class="form-group label-floating is-empty">
+            <form class="form-horizaontal">
+              <fieldset>
+                <div action="/Music" method="get" class="form-group label-floating is-empty">
+                  {% module xsrf_form_html() %}
+                  <label class="control-label" for="song">搜一首歌听吧</label>
+                  <div class="input-group">
+                    <input type="text" id="song" name="song" class="form-control" required>
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn btn-fab btn-fab-mini">
+                        <i class="material-icons">search</i>
+                      </button>
+                    </span>
+                  </div>
+                  <span class="material-input"></span></div>
+              </fieldset>
+            </form>
+          </div>
+
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Music</h3>
+            </div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>歌名</th>
+                  <th>歌手</th>
+                  <th>专辑</th>
+                  <th>mp3</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% if songs %}
+                {% for song in songs %}
+                <tr>
+                  <td>{{ escape(song['title']) }}</td>
+                  <td>{{ escape(song['artist']) }}</td>
+                  <td>{{ escape(song['album']) }}</td>
+                  <td>
+                    <audio controls>
+                      <source src="{{ escape(song['mp3_url']) }}" >
+                    </audio>
+                  </td>
+                </tr>
+                {% end %}
+                {% else %}
+                {% for song in search_songs %}
+                <tr>
+                  <td>{{ escape(song['title']) }}</td>
+                  <td>{{ escape(song['artist']) }}</td>
+                  <td>{{ escape(song['album']) }}</td>
+                  <td>
+                    <audio controls>
+                      <source src="{{ escape(song['mp3_url']) }}" >
+                    </audio>
+                  </td>
+                </tr>
+                {% end %}
+                {% end %}
+              </tbody>
+            </table>
+          </div>
+
+
+
+      </div>
+
+    </div><!--/row-->
+
+    {% include foot.html %}
+

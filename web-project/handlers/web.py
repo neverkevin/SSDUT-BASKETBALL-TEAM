@@ -6,6 +6,7 @@ from tornado import gen
 from baseHandler import BaseHandler
 from operations.routes import route
 from models.model import *
+from models import music
 
 
 @route(r'/$', name='index')
@@ -68,6 +69,19 @@ class UserHandler(BaseHandler):
             raise tornado.web.HTTPError(403)
 
 
+@route(r'/Music', name='Music')
+class MusicHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        url = self.request.uri
+        if url == '/Music':
+            songs = music.query('mylove')
+        else:
+            songs = music.query(self.get_argument('song'))
+        username = tornado.escape.xhtml_escape(self.current_user)
+        self.render('Music.html', username=username, url=url, songs=songs)
+
+
 @route(r'/login$', name='login')
 class LoginHandler(BaseHandler):
     def get(self):
@@ -91,7 +105,6 @@ class LoginHandler(BaseHandler):
 
 @route(r'/logout$', name='logout')
 class LogoutHandler(BaseHandler):
-    @gen.coroutine
     def get(self):
         self.clear_cookie("user")
         self.redirect("/", permanent=True)
