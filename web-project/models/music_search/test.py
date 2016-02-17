@@ -6,5 +6,5 @@ from tiantian_crawler import TiantianCrawler
 from netease_crawler import NeteaseCrawler
 
 # crawler = NeteaseCrawler()
-crawler = TiantianCrawler()
-print crawler.query('我好想你')
+crawler = NeteaseCrawler()
+print crawler.query(u'我好想你')

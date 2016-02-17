@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import tornado
+from urllib import quote
 from tornado import gen
 from baseHandler import BaseHandler
 from operations.routes import route
@@ -63,7 +64,7 @@ class UserHandler(BaseHandler):
     def get(self):
         url = self.request.uri
         username = tornado.escape.xhtml_escape(self.current_user)
-        if url == '/user/{}'.format(username):
+        if url == '/user/{}'.format(quote(username)):
             self.render('user.html', url=url, username=username)
         else:
             raise tornado.web.HTTPError(403)

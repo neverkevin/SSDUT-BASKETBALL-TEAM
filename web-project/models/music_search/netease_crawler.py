@@ -6,7 +6,7 @@ import json
 from http.GAHTTPHandler import GAHTTPHandler
 
 reload(sys)
-sys.setdefaultencoding("utf-8")
+sys.setdefaultencoding('utf8')
 
 
 class NeteaseCrawler():

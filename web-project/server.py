@@ -14,7 +14,7 @@ import settings
 from operations.routes import route
 
 define("debug", default=True, help="run in debug mode", type=bool)
-define("port", default=2358, help="run on the given port", type=int)
+define("port", default=8082, help="run on the given port", type=int)
 define("showurls", default=False, help="Show all routed URLs", type=bool)
 
 
