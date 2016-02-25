@@ -20,6 +20,11 @@ class MainHandler(BaseHandler):
         else:
             self.render('index.html', url=url, username="登录")
 
+@route(r'/test$', name='test')
+class TestHandler(BaseHandler):
+    def get(self):
+        self.render('detail.html')
+
 
 @route(r'/HallofFame$', name='mingrentang')
 class HallofFameHandler(BaseHandler):

@@ -7,4 +7,5 @@ from netease_crawler import NeteaseCrawler
 
 # crawler = NeteaseCrawler()
 crawler = NeteaseCrawler()
-print crawler.query(u'我好想你')
+print crawler.query(u'我好想你', id='252999')
+# print crawler.query(u'我好想你')
