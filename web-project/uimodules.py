@@ -12,7 +12,7 @@ class NavbarHeader(Navbar):
     def render(self, url, username):
         username = username
         brand = {}
-        brand['name'] = 'SSDUT 篮球队'
+        brand['name'] = '篮球队'
         brand['href'] = '/'
         navs = [{ }, { }]
         navs[0]['name'] = '名人堂'

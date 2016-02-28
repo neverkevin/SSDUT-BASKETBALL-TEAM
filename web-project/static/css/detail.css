@@ -1,0 +1,116 @@
+*{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+a{
+	text-decoration: none;
+}
+.container{
+	background: url(/static/img/bg.jpg) no-repeat;
+	width: 100%;
+	height: 1000px;
+	font-family: Microsoft YaHei;
+}
+.head{
+	padding-right: 100px;
+	width: 1100px;
+	margin: 0 auto;
+	border-bottom: 2px solid #ff621f;
+}
+.main{
+	width: 100%;
+	padding: 100px 300px 0;
+
+}
+.detail{
+	width: 400px;
+	height: 400px;
+	background-color: white;
+	opacity: 0.8;
+	box-shadow: 0 0 40px 3px #333;
+	border-radius: 10px;
+}
+.deleft{
+	float: left;
+	width: 160px;
+	padding: 30px;
+}
+.deleft img{
+	width: 150px;
+	border: 5px solid white;
+	box-shadow: 0 0 15px 1px #666;
+	border-radius: 5px;
+
+}
+.deright{
+	float: left;
+	width: 150px;
+	padding: 30px 30px 0px 0;
+	color: #666;
+	font-size: 13px;
+	line-height: 25px;
+}
+.title{
+	font-size: 40px;
+	line-height: 40px;
+	margin-bottom: 20px;
+	position: relative;
+	left: -5px;
+	color: #333;
+
+}
+.login{
+	font-size: 16px;
+	color: #ff621f;
+	float: right;
+	line-height: 50px;
+	text-decoration: none;
+	position: relative;
+	top: 55px;
+	text-align: center;
+	width: 120px;
+}
+.login.active{
+	color: white;
+	background-color: #ff621f;
+	opacity: 0.9;
+}
+.login:hover{
+	color: white;
+	background-color: #ff621f;
+	opacity: 0.9;
+
+}
+.nav{
+	position: relative;
+	float: right;
+	background-color: white;
+	opacity: 0.7;
+	top: 107px;
+	left: 120px;
+	box-shadow: 0 2px 15px 1px #666;
+	border-radius: 0 0 5px 5px;
+	display: none;
+
+}
+.nav ul {
+	padding: 5px 0;
+}
+
+.nav ul li{
+	width: 120px;
+	font-size: 14px;
+	color: #ff621f;
+	text-align: center;
+	line-height: 35px;
+}
+.nav ul li a{
+	color: #ff621f;
+	width: 120px;
+	height: 35px;
+	display: block;
+}
+.nav ul li a:hover{
+	background-color: #eee;
+}
