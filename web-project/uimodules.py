@@ -52,3 +52,5 @@ class GradeRight(Grade):
             if url == '/history/%s' % n:
                 grades[i]['active'] = True
         return Grade.render(self, grades)
+
+
