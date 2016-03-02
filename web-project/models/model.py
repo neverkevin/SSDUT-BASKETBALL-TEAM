@@ -25,7 +25,7 @@ def login(mysql_db, username, password):
         passwdSQL = "select password from user where username=%s"
         getpassword = mysql_db.get(passwdSQL, username)
         if getpassword["password"] == password:
-            return True
+            return '1'
         else:
             return "密码错误！"
     else:

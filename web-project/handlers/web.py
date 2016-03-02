@@ -1,8 +1,10 @@
 # /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import re
 import tornado
 from urllib import quote
+from urllib import unquote
 from tornado import gen
 from baseHandler import BaseHandler
 from operations.routes import route
@@ -19,6 +21,7 @@ class MainHandler(BaseHandler):
             self.render('index.html', url=url, username=username)
         else:
             self.render('index.html', url=url, username="登录")
+
 
 @route(r'/test$', name='test')
 class TestHandler(BaseHandler):
@@ -96,17 +99,22 @@ class LoginHandler(BaseHandler):
 
     @gen.coroutine
     def post(self):
-        username = self.get_argument('username')
-        password = self.get_argument('password')
+        data = self.request.body
+        username = unquote(re.findall('username=([^&]*)', data)[0])
+        password = unquote(re.findall('passowrd=([^&]*)', data)[0])
         result = yield login(self.application.mysql_db, username, password)
-        if result is True:
+        if result == '1':
             nickname = yield get_nickname(self.application.mysql_db, username)
             self.set_secure_cookie("user", nickname)
-            self.redirect("/HallofFame", permanent=True)
+        self.write(result)
+        # if result is True:
+        #     nickname = yield get_nickname(self.application.mysql_db, username)
+        #     self.set_secure_cookie("user", nickname)
+        #     self.redirect("/HallofFame", permanent=True)
 
-        else:
-            url = self.request.uri
-            self.render("login.html", url=url, username="登录", error=result)
+        # else:
+        #     url = self.request.uri
+        #     self.render("login.html", url=url, username="登录", error=result)
 
 
 @route(r'/logout$', name='logout')

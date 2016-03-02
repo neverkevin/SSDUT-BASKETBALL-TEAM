@@ -4,7 +4,7 @@
 		{% module NavbarHeader(url, username) %}
     <div class="main-shadow">
       <div class="container">
-        <div class="well bs-component" style="margin:0 auto; width:500px;">
+        <div class="well bs-component" style="margin:0 auto; width:600px;">
           <form class="form-horizontal" method="post" action="/login">
             <fieldset>
               {% if url == '/login?next=%2FHallofFame' or url == '/login?next=%2FMusic' %}
@@ -13,18 +13,16 @@
                   <p>请登录后查看!</p>
                 </div>
               {% end %}
-              {% if error != None %}
-                <div class="alert alert-dismissible alert-warning">
+              <div id="err" class="alert alert-dismissible alert-warning" style="display:none">
                   <button type="button" class="close" data-dismiss="alert">×</button>
-                  <p>{{ escape(error) }}</p>
+                  <p id="p-err"></p>
                 </div>
-              {% end %}
               <legend>登录</legend>
               {% module xsrf_form_html() %}
               <div class="form-group is-empty">
                 <label for="inputEmail" class="col-md-2 control-label">邮箱账号</label>
                 <div class="col-md-10">
-                  <input type="email" name="username" class="form-control" id="inputEmail" placeholder="Email" required>
+                  <input type="email" name="username" class="form-control" id="inputEmail" placeholder="Email" required onkeypress="if(event.keyCode==13) {button.click();return false;}" autofocus="autofocus">
                 </div>
                 <span class="material-input"></span>
               </div>
@@ -32,17 +30,43 @@
                 <label for="inputPassword" class="col-md-2 control-label">密码</label>
 
                 <div class="col-md-10">
-                  <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" required>
+                  <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" required onkeypress="if(event.keyCode==13) {button.click();return false;}">
                 </div>
                 <span class="material-input"></span>
               </div>
               <div class="form-group">
                 <div class="col-md-10 col-md-offset-2">
-                  <button type="submit" class="btn btn-raised btn-primary">登录</button>
+                    <input type="button" id="button" value="登录" class="btn btn-raised btn-primary" onclick="jacascript:getHTML();">
                   <a href="/register" class="btn btn-raised btn-default">新用户注册</a>
                 </div>
               </div>
             </fieldset>
           </form>
         </div>
+
+        <script type="text/javascript" charset="utf-8">
+          function getHTML() {
+            var username = $('#inputEmail').val();
+            var password = $('#inputPassword').val();
+            _xsrf = $("input[name='_xsrf']").val();
+            $.ajax({
+                url: '/login',
+                type: 'POST',
+                data: {
+                  'username': username,
+                  'passowrd': password,
+                  '_xsrf': _xsrf
+                },
+            success: function(r) {
+              if (r=='1') {
+                window.location='/';
+                }
+              else{
+                $('p#p-err').html(r);
+                document.getElementById('err').style.display="block";
+              }
+              }
+            });
+          }
+        </script>
          {% include foot.html %}
