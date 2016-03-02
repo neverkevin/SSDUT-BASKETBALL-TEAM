@@ -3,9 +3,13 @@
 
 import tornado
 
+
 class Navbar(tornado.web.UIModule):
     def render(self, brand, navs, login, username):
-        return self.render_string("header.html", username=username, brand=brand, navs=navs, login=login)
+        return self.render_string(
+            "header.html", username=username,
+            brand=brand, navs=navs, login=login
+        )
 
 
 class NavbarHeader(Navbar):
@@ -14,7 +18,7 @@ class NavbarHeader(Navbar):
         brand = {}
         brand['name'] = '篮球队'
         brand['href'] = '/'
-        navs = [{ }, { }]
+        navs = [{}, {}]
         navs[0]['name'] = '名人堂'
         navs[0]['href'] = '/HallofFame'
         navs[1]['name'] = 'Music'
