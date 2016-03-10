@@ -12,7 +12,7 @@ from models.model import *
 from models import music
 
 
-@route(r'/$', name='index')
+@route(r'/$', name='home')
 class MainHandler(BaseHandler):
     def get(self):
         url = self.request.uri
@@ -34,7 +34,7 @@ class HallofFameHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         url = self.request.uri
-        contacts, total_contacts = yield GetContacts(self.application.mysql_db)
+        contacts, total_contacts = yield GetContacts(self.mysql_db)
         username = tornado.escape.xhtml_escape(self.current_user)
         self.render(
             'HallofFame.html', contacts=contacts, url=url,
@@ -113,14 +113,16 @@ class LoginHandler(BaseHandler):
             nickname = yield get_nickname(self.application.mysql_db, username)
             self.set_secure_cookie("user", nickname)
         self.write(result)
-        # if result is True:
-        #     nickname = yield get_nickname(self.application.mysql_db, username)
-        #     self.set_secure_cookie("user", nickname)
-        #     self.redirect("/HallofFame", permanent=True)
 
-        # else:
-        #     url = self.request.uri
-        #     self.render("login.html", url=url, username="登录", error=result)
+
+@route(r'/check_username', name='checkout_username')
+class CheckUsernameHandler(BaseHandler):
+    @gen.coroutine
+    def post(self):
+        data = self.request.body
+        username = unquote(re.findall('username=([^&]*)', data)[0])
+        result = yield check_username(self.application.mysql_db, username)
+        self.write(result)
 
 
 @route(r'/logout$', name='logout')
@@ -143,16 +145,21 @@ class RegisterHandler(BaseHandler):
 
     @gen.coroutine
     def post(self):
-        username = self.get_argument('username')
-        nickname = self.get_argument('nickname')
-        password = self.get_argument('password')
-        secretcode = self.get_argument('Secretcode')
+        data = self.request.body
+        print 'data: %s' % data
+        username = unquote(re.findall('username=([^&]*)', data)[0])
+        nickname = unquote(re.findall('nickname=([^&]*)', data)[0])
+        password = unquote(re.findall('password=([^&]*)', data)[0])
+        secretcode = unquote(re.findall('secretcode=([^&]*)', data)[0])
+        # username = self.get_argument('username')
+        # nickname = self.get_argument('nickname')
+        # password = self.get_argument('password')
+        # secretcode = self.get_argument('Secretcode')
         result = yield register(
             self.application.mysql_db, username, nickname, password, secretcode
         )
-        if result is True:
-            self.redirect("/login", permanent=True)
-
-        else:
-            url = self.request.uri
-            self.render("register.html", url=url, username="登录", error=result)
+        self.write(result)
+        # if result is True:
+        #     self.redirect("/login", permanent=True)
+        # url = self.request.uri
+        # self.render("register.html", url=url, username="登录", error=result)

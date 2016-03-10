@@ -18,8 +18,3 @@ class BaseHandler(tornado.web.RequestHandler):
         # return self.mysql_db.get("SELECT username FROM user \
         #                          WHERE username = %s", username)
 
-    def get_login_url(self):
-        '''
-            override login_url
-        '''
-        return "/login"

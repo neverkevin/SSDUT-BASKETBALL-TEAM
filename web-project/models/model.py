@@ -42,12 +42,21 @@ def get_nickname(mysql_db, username):
 @gen.coroutine
 def register(mysql_db, username, nickname, password, secretcode):
     if secretcode != "secret":
-        return "激活码错误!"
+        return "0"
     usernameSQL = "select username from user where username=%s"
     is_username_exist = mysql_db.get(usernameSQL, username)
     if is_username_exist:
-        return "邮箱已注册!"
+        return "-1"
     sql = "INSERT INTO user (username, nickname, password) \
             VALUES (%s, %s, %s)"
     mysql_db.insert(sql, username, nickname, password)
-    return True
+    return "1"
+
+
+@gen.coroutine
+def check_username(mysql_db, username):
+    sql = 'select username from user where username=%s'
+    sql_username = mysql_db.get(sql, username)
+    if sql_username == username:
+        return '0'
+    return '1'

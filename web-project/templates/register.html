@@ -4,15 +4,13 @@
 		{% module NavbarHeader(url, username) %}
     <div class="main-shadow">
       <div class="container">
-        <div class="well bs-component" style="margin:0 auto; width:500px;">
+        <div class="well bs-component" style="margin:0 auto; width:480px;">
           <form class="form-horizontal" method="post" action="/register">
             <fieldset>
-              {% if error is not None %}
-                <div class="alert alert-dismissible alert-warning">
+                <div id="err" class="alert alert-dismissible alert-warning" style="display:none">
                   <button type="button" class="close" data-dismiss="alert">×</button>
-                  <p>{{ escape(error) }}</p>
+                  <p id="p_err"></p>
                 </div>
-                {% end %}
               <legend>注册</legend>
               {% module xsrf_form_html() %}
               <div class="form-group is-empty">
@@ -36,7 +34,16 @@
                 <label for="inputPassword" class="col-md-2 control-label">密码</label>
 
                 <div class="col-md-10">
-                  <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" required>
+                  <input type="password" name="password" class="form-control" id="inputPassword" placeholder="请输入密码" required>
+                </div>
+                <span class="material-input"></span>
+              </div>
+
+              <div class="form-group is-empty">
+                <label for="inputRePassword" class="col-md-2 control-label">密码</label>
+
+                <div class="col-md-10">
+                  <input type="password" name="password" class="form-control" id="inputRePassword" placeholder="再次输入密码" required>
                 </div>
                 <span class="material-input"></span>
               </div>
@@ -53,11 +60,52 @@
 
               <div class="form-group">
                 <div class="col-md-10 col-md-offset-2">
-                  <button type="submit" class="btn btn-raised btn-primary">注册</button>
+                  <input type="button" id="button" class="btn btn-raised btn-primary" value='注册' onclick="jacascript:Register();">
                   <a href="/login" class="btn btn-raised btn-default">登录</a>
                 </div>
               </div>
             </fieldset>
           </form>
         </div>
+        <script type="text/javascript" charset="utf-8">
+          function Register() {
+            var password = $('#inputPassword').val();
+            var re_password = $('#inputRePassword').val();
+            if (password != re_password) {
+              $('p#p_err').html("两次密码输入不一致");
+              document.getElementById('err').style.display="block";
+              return false;
+            }
+            var username = $('#inputEmail').val();
+            var nickname = $('#inputNickname').val();
+            var secretcode = $('#inputSecretcode').val();
+            var _xsrf = $("input[name='_xsrf']").val();
+            $.ajax({
+                url: '/register',
+                type: 'POST',
+                data: {
+                  'username': username,
+                  'nickname': nickname,
+                  'password': password,
+                  'secretcode': secretcode,
+                  '_xsrf': _xsrf
+                },
+                success: function(r) {
+                  if (r=='0') {
+                    $('p#p_err').html("请输入正确的激活码！");
+                    document.getElementById('err').style.display="block";
+                    return false;
+                  }
+                  else if (r=='-1') {
+                    $('p#p_err').html("账号已注册！");
+                    document.getElementById('err').style.display="block";
+                    return false;
+                  }
+                  else if (r=='1') {
+                    window.location='/login';
+                  }
+                }
+            });
+          }
+        </script>
          {% include foot.html %}

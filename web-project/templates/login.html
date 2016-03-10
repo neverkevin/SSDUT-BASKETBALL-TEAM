@@ -4,7 +4,7 @@
 		{% module NavbarHeader(url, username) %}
     <div class="main-shadow">
       <div class="container">
-        <div class="well bs-component" style="margin:0 auto; width:600px;">
+        <div class="well bs-component" style="margin:0 auto; width:480px;">
           <form class="form-horizontal" method="post" action="/login">
             <fieldset>
               {% if url == '/login?next=%2FHallofFame' or url == '/login?next=%2FMusic' %}
@@ -57,14 +57,14 @@
                   'passowrd': password,
                   '_xsrf': _xsrf
                 },
-            success: function(r) {
-              if (r=='1') {
-                window.location='/';
-                }
-              else{
-                $('p#p-err').html(r);
-                document.getElementById('err').style.display="block";
-              }
+              success: function(r) {
+                if (r=='1') {
+                  window.location='/';
+                  }
+                else{
+                  $('p#p-err').html(r);
+                  document.getElementById('err').style.display="block";
+                 }
               }
             });
           }
