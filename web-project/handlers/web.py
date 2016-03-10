@@ -18,8 +18,9 @@ class MainHandler(BaseHandler):
         url = self.request.uri
         if not self.get_secure_cookie("user"):
             self.render('index.html', url=url, username="登录")
-        username = tornado.escape.xhtml_escape(self.current_user)
-        self.render('index.html', url=url, username=username)
+        else:
+            username = tornado.escape.xhtml_escape(self.current_user)
+            self.render('index.html', url=url, username=username)
 
 
 @route(r'/test$', name='test')
@@ -152,7 +153,6 @@ class RegisterHandler(BaseHandler):
     @gen.coroutine
     def post(self):
         data = self.request.body
-        print 'data: %s' % data
         username = unquote(re.findall('username=([^&]*)', data)[0])
         nickname = unquote(re.findall('nickname=([^&]*)', data)[0])
         password = unquote(re.findall('password=([^&]*)', data)[0])

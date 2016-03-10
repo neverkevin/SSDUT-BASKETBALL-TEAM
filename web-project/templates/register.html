@@ -15,9 +15,9 @@
               <legend>注册</legend>
               {% module xsrf_form_html() %}
               <div class="form-group is-empty">
-                <label for="inputEmail" class="col-md-2 control-label">邮箱账号</label>
+                <label for="inputEmail" class="col-md-2 control-label">账号</label>
                 <div class="col-md-10">
-                  <input type="email" name="username" class="form-control" id="inputEmail" placeholder="Email" required>
+                  <input type="account" name="username" class="form-control" id="inputEmail" placeholder="请输入账号" required>
                 </div>
                 <span class="material-input"></span>
               </div>
@@ -25,8 +25,7 @@
               <div class="form-group is-empty">
                 <label for="inputNickname" class="col-md-2 control-label">昵称</label>
                 <div class="col-md-10">
-                  <input type="nickname" name="nickname" class="form-control"
-                  id="inputNickname" placeholder="Nickname" required>
+                  <input type="nickname" name="nickname" class="form-control" id="inputNickname" placeholder="请输入昵称" required>
                 </div>
                 <span class="material-input"></span>
               </div>
@@ -41,7 +40,7 @@
               </div>
 
               <div class="form-group is-empty">
-                <label for="inputRePassword" class="col-md-2 control-label">密码</label>
+                <label for="inputRePassword" class="col-md-2 control-label">确认密码</label>
 
                 <div class="col-md-10">
                   <input type="password" name="password" class="form-control" id="inputRePassword" placeholder="再次输入密码" required>
@@ -68,45 +67,5 @@
             </fieldset>
           </form>
         </div>
-        <script type="text/javascript" charset="utf-8">
-          function Register() {
-            var password = $('#inputPassword').val();
-            var re_password = $('#inputRePassword').val();
-            if (password != re_password) {
-              $('p#p_err').html("两次密码输入不一致");
-              document.getElementById('err').style.display="block";
-              return false;
-            }
-            var username = $('#inputEmail').val();
-            var nickname = $('#inputNickname').val();
-            var secretcode = $('#inputSecretcode').val();
-            var _xsrf = $("input[name='_xsrf']").val();
-            $.ajax({
-                url: '/register',
-                type: 'POST',
-                data: {
-                  'username': username,
-                  'nickname': nickname,
-                  'password': password,
-                  'secretcode': secretcode,
-                  '_xsrf': _xsrf
-                },
-                success: function(r) {
-                  if (r=='0') {
-                    $('p#p_err').html("请输入正确的激活码！");
-                    document.getElementById('err').style.display="block";
-                    return false;
-                  }
-                  else if (r=='-1') {
-                    $('p#p_err').html("账号已注册！");
-                    document.getElementById('err').style.display="block";
-                    return false;
-                  }
-                  else if (r=='1') {
-                    window.location='/login';
-                  }
-                }
-            });
-          }
-        </script>
+        <script type="text/javascript" src="static/js/register.js" charset="utf-8"></script>
          {% include foot.html %}

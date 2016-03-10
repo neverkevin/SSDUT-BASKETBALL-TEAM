@@ -9,17 +9,21 @@
           <form class="form-horizontal" method="post" action="/login">
             <fieldset>
               {% if url == '/login?next=%2FHallofFame' or url == '/login?next=%2FMusic' %}
-              <div id="err" class="alert alert-dismissible alert-warning">
+              <div id="login-referer" class="alert alert-dismissible alert-warning" style="display:block">
                   <button type="button" class="close" data-dismiss="alert">×</button>
-                  <p id="p-err">请登录后查看!</p>
-                </div>
+                  <p>请登录后查看!</p>
+              </div>
               {% end %}
+              <div id="err" class="alert alert-dismissible alert-warning" style="display:none">
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                  <p id="p-err"></p>
+              </div>
               <legend>登录</legend>
               {% module xsrf_form_html() %}
               <div class="form-group is-empty">
-                <label for="inputEmail" class="col-md-2 control-label">邮箱账号</label>
+                <label for="inputEmail" class="col-md-2 control-label">账号</label>
                 <div class="col-md-10">
-                  <input type="email" name="username" class="form-control" id="inputEmail" placeholder="Email" required onkeypress="if(event.keyCode==13) {button.click();return false;}" autofocus="autofocus">
+                  <input type="account" name="username" class="form-control" id="inputEmail" placeholder="Email" onkeypress="if(event.keyCode==13) {button.click();return false;}" autofocus="autofocus" required>
                 </div>
                 <span class="material-input"></span>
               </div>
@@ -27,7 +31,7 @@
                 <label for="inputPassword" class="col-md-2 control-label">密码</label>
 
                 <div class="col-md-10">
-                  <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" required onkeypress="if(event.keyCode==13) {button.click();return false;}">
+                  <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" onkeypress="if(event.keyCode==13) {button.click();return false;}" required>
                 </div>
                 <span class="material-input"></span>
               </div>
