@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 	{% include head.html %}
+    </head>
   <body>
 		{% module NavbarHeader(url, username) %}
     <div class="main-shadow">
@@ -8,15 +9,11 @@
           <form class="form-horizontal" method="post" action="/login">
             <fieldset>
               {% if url == '/login?next=%2FHallofFame' or url == '/login?next=%2FMusic' %}
-                <div class="alert alert-dismissible alert-warning">
+              <div id="err" class="alert alert-dismissible alert-warning">
                   <button type="button" class="close" data-dismiss="alert">×</button>
-                  <p>请登录后查看!</p>
+                  <p id="p-err">请登录后查看!</p>
                 </div>
               {% end %}
-              <div id="err" class="alert alert-dismissible alert-warning" style="display:none">
-                  <button type="button" class="close" data-dismiss="alert">×</button>
-                  <p id="p-err"></p>
-                </div>
               <legend>登录</legend>
               {% module xsrf_form_html() %}
               <div class="form-group is-empty">
@@ -43,30 +40,6 @@
             </fieldset>
           </form>
         </div>
-
-        <script type="text/javascript" charset="utf-8">
-          function getHTML() {
-            var username = $('#inputEmail').val();
-            var password = $('#inputPassword').val();
-            _xsrf = $("input[name='_xsrf']").val();
-            $.ajax({
-                url: '/login',
-                type: 'POST',
-                data: {
-                  'username': username,
-                  'passowrd': password,
-                  '_xsrf': _xsrf
-                },
-              success: function(r) {
-                if (r=='1') {
-                  window.location='/';
-                  }
-                else{
-                  $('p#p-err').html(r);
-                  document.getElementById('err').style.display="block";
-                 }
-              }
-            });
-          }
-        </script>
-         {% include foot.html %}
+      </div>
+      <script type="text/javascript" src="static/js/login.js" charset="utf-8"> </script>
+      {% include foot.html %}
