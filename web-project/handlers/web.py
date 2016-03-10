@@ -8,7 +8,7 @@ from urllib import unquote
 from tornado import gen
 from baseHandler import BaseHandler
 from operations.routes import route
-from models.model import *
+from models import model
 from models import music
 
 
@@ -34,12 +34,12 @@ class HallofFameHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         url = self.request.uri
-        contacts, total_contacts = yield GetContacts(self.mysql_db)
+        contacts, total_contacts = yield model.get_contacts(self.mysql_db)
         username = tornado.escape.xhtml_escape(self.current_user)
         self.render(
             'HallofFame.html', contacts=contacts, url=url,
             username=username, total_contacts=total_contacts
-        )
+            )
 
 
 @route(r'/history/([0-9]+)$', name='history/([0-9]+)')
@@ -55,7 +55,7 @@ class HistoryHandler(BaseHandler):
         self.render(
             'history.html', history_id=history_id,
             url=url, username=username
-        )
+            )
 
 
 @route(r'/add_contacts$', name='add_contacts')
@@ -67,9 +67,9 @@ class AddContactsHandler(BaseHandler):
         grade = self.get_argument('grade')
         phonenum = self.get_argument('phonenum')
         place = self.get_argument('place')
-        yield AddContacts(
+        yield model.add_contacts(
             self.application.mysql_db, name, grade, phonenum, place
-        )
+            )
         self.redirect('/HallofFame', permanent=True)
 
 
@@ -108,9 +108,13 @@ class LoginHandler(BaseHandler):
         data = self.request.body
         username = unquote(re.findall('username=([^&]*)', data)[0])
         password = unquote(re.findall('passowrd=([^&]*)', data)[0])
-        result = yield login(self.application.mysql_db, username, password)
+        result = yield model.login(
+            self.application.mysql_db, username, password
+            )
         if result == '1':
-            nickname = yield get_nickname(self.application.mysql_db, username)
+            nickname = yield model.get_nickname(
+                self.application.mysql_db, username
+                )
             self.set_secure_cookie("user", nickname)
         self.write(result)
 
@@ -121,7 +125,9 @@ class CheckUsernameHandler(BaseHandler):
     def post(self):
         data = self.request.body
         username = unquote(re.findall('username=([^&]*)', data)[0])
-        result = yield check_username(self.application.mysql_db, username)
+        result = yield model.check_username(
+            self.application.mysql_db, username
+            )
         self.write(result)
 
 
@@ -141,7 +147,7 @@ class RegisterHandler(BaseHandler):
         username = tornado.escape.xhtml_escape(self.current_user)
         self.render(
             'register.html', url=url, username=username, error=None
-        )
+            )
 
     @gen.coroutine
     def post(self):
@@ -151,13 +157,9 @@ class RegisterHandler(BaseHandler):
         nickname = unquote(re.findall('nickname=([^&]*)', data)[0])
         password = unquote(re.findall('password=([^&]*)', data)[0])
         secretcode = unquote(re.findall('secretcode=([^&]*)', data)[0])
-        # username = self.get_argument('username')
-        # nickname = self.get_argument('nickname')
-        # password = self.get_argument('password')
-        # secretcode = self.get_argument('Secretcode')
-        result = yield register(
+        result = yield model.register(
             self.application.mysql_db, username, nickname, password, secretcode
-        )
+            )
         self.write(result)
         # if result is True:
         #     self.redirect("/login", permanent=True)

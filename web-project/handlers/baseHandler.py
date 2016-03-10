@@ -9,12 +9,7 @@ class BaseHandler(tornado.web.RequestHandler):
         return self.application.mysql_db
 
     def get_current_user(self):
-        '''
-            auth user
-        '''
-        return self.get_secure_cookie("user")
-        # username = self.get_secure_cookie("user")
-        # if not username: return None
-        # return self.mysql_db.get("SELECT username FROM user \
-        #                          WHERE username = %s", username)
-
+        username = self.get_secure_cookie("user")
+        if not username:
+            return None
+        return username

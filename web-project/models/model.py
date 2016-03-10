@@ -4,14 +4,14 @@ from tornado import gen
 
 
 @gen.coroutine
-def GetContacts(mysql_db):
+def get_contacts(mysql_db):
     contacts = mysql_db.query("select * from content")
     total_contacts = mysql_db.query("select count(*) from content")
     return contacts, str(total_contacts[0]["count(*)"])
 
 
 @gen.coroutine
-def AddContacts(mysql_db, name, grade, phonenum, place):
+def add_contacts(mysql_db, name, grade, phonenum, place):
     sql = "insert into content (name, grade, phonenum, place) \
             values (%s, %s, %s, %s)"
     mysql_db.insert(sql, name, grade, phonenum, place)
