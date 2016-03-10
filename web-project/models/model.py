@@ -1,20 +1,32 @@
 # -*- coding: utf-8 -*-
 
+import hashlib
+import sys
 from tornado import gen
+
+reload(sys)
+sys.setdefaultencoding('utf8')
+
+
+def md5(data):
+    md5 = hashlib.md5()
+    data = data + 'secret'
+    md5.update(data)
+    return md5.hexdigest()
 
 
 @gen.coroutine
 def get_contacts(mysql_db):
-    contacts = mysql_db.query("select * from content")
-    total_contacts = mysql_db.query("select count(*) from content")
+    contacts = mysql_db.query("select * from contacts")
+    total_contacts = mysql_db.query("select count(*) from contacts")
     return contacts, str(total_contacts[0]["count(*)"])
 
 
 @gen.coroutine
 def add_contacts(mysql_db, name, grade, phonenum, place):
-    sql = "insert into content (name, grade, phonenum, place) \
+    sql = "insert into contacts (name, grade, phonenum, place) \
             values (%s, %s, %s, %s)"
-    mysql_db.insert(sql, name, grade, phonenum, place)
+    mysql_db.insert(sql, name, grade, phonenum, place.encode('utf8'))
 
 
 @gen.coroutine
@@ -23,6 +35,7 @@ def login(mysql_db, username, password):
     is_username_exist = mysql_db.get(usernameSQL, username)
     if is_username_exist is not None:
         passwdSQL = "select password from user where username=%s"
+        password = md5(password)
         getpassword = mysql_db.get(passwdSQL, username)
         if getpassword["password"] == password:
             return '1'
@@ -47,6 +60,7 @@ def register(mysql_db, username, nickname, password, secretcode):
     is_username_exist = mysql_db.get(usernameSQL, username)
     if is_username_exist:
         return "-1"
+    password = md5(password)
     sql = "INSERT INTO user (username, nickname, password) \
             VALUES (%s, %s, %s)"
     mysql_db.insert(sql, username, nickname, password)

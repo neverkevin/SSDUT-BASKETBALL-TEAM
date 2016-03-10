@@ -12,7 +12,8 @@ function Register() {
     return false;
   }
   var password = $('#inputPassword').val().toString();
-  if (password=='' || password.length < 8 || password > 16) {
+  if (password=='' || password.length < 8 || password.length > 16) {
+      alert(password.length);
     $('p#p_err').html("请输入8-16位密码");
     document.getElementById('err').style.display="block";
     return false;
