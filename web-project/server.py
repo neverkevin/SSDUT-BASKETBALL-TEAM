@@ -3,13 +3,13 @@
 
 import os.path
 
+import torndb
 import tornado.ioloop
 import tornado.options
 import tornado.web
 from tornado.options import define, options
-import uimodules
-import torndb
 
+import uimodules
 import settings
 from operations.routes import route
 
