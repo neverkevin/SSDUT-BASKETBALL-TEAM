@@ -90,10 +90,9 @@ class MusicHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         url = self.request.uri
-        if url == '/Music':
-            songs = music.query('mylove')
-        else:
+        if url != '/Music':
             songs = music.query(self.get_argument('song'))
+        songs = music.query('mylove')
         username = tornado.escape.xhtml_escape(self.current_user)
         self.render('Music.html', username=username, url=url, songs=songs)
 
@@ -161,7 +160,3 @@ class RegisterHandler(BaseHandler):
             self.application.mysql_db, username, nickname, password, secretcode
             )
         self.write(result)
-        # if result is True:
-        #     self.redirect("/login", permanent=True)
-        # url = self.request.uri
-        # self.render("register.html", url=url, username="登录", error=result)
