@@ -33,7 +33,7 @@ class Application(tornado.web.Application):
             webmaster=settings.WEBMASTER,
             admin_emails=settings.ADMIN_EMAILS,
         )
-        self.mysql_db = torndb.Connection(settings.MYSQL_HOST,
+        self.db = torndb.Connection(settings.MYSQL_HOST,
                                           settings.MYSQL_DATABASE_NAME,
                                           settings.MYSQL_USER_NAME,
                                           settings.MYSQL_PASS_WORD)

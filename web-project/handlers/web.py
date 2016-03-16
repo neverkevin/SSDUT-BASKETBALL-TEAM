@@ -35,7 +35,9 @@ class HallofFameHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         url = self.request.uri
-        contacts, total_contacts = yield model.get_contacts(self.mysql_db)
+        contacts, total_contacts = yield model.get_contacts(
+            self.application.db
+            )
         username = tornado.escape.xhtml_escape(self.current_user)
         self.render(
             'HallofFame.html', contacts=contacts, url=url,
@@ -69,7 +71,7 @@ class AddContactsHandler(BaseHandler):
         phonenum = self.get_argument('phonenum')
         place = self.get_argument('place')
         yield model.add_contacts(
-            self.application.mysql_db, name, grade, phonenum, place
+            self.application.db, name, grade, phonenum, place
             )
         self.redirect('/HallofFame', permanent=True)
 
@@ -82,7 +84,18 @@ class UserHandler(BaseHandler):
         username = tornado.escape.xhtml_escape(self.current_user)
         if url != '/user/{}'.format(quote(username)):
             raise tornado.web.HTTPError(403)
-        self.render('user.html', url=url, username=username)
+        user = model.get_user(
+            self.application.db, username
+            )
+        self.render('user.html', url=url, username=username, user=user)
+
+    def post(self):
+        nickname = tornado.escape.xhtml_escape(self.current_user)
+        data = self.request.arguments
+        result = model.fix_user(
+            self.application.db, nickname, data
+            )
+        self.write(result)
 
 
 @route(r'/Music', name='Music')
@@ -105,15 +118,15 @@ class LoginHandler(BaseHandler):
 
     @gen.coroutine
     def post(self):
-        data = self.request.body
-        username = unquote(re.findall('username=([^&]*)', data)[0])
-        password = unquote(re.findall('passowrd=([^&]*)', data)[0])
+        data = self.request.arguments
+        username = data['username'][0]
+        password = data['password'][0]
         result = yield model.login(
-            self.application.mysql_db, username, password
+            self.application.db, username, password
             )
         if result == '1':
             nickname = yield model.get_nickname(
-                self.application.mysql_db, username
+                self.application.db, username
                 )
             self.set_secure_cookie("user", nickname)
         self.write(result)
@@ -123,10 +136,10 @@ class LoginHandler(BaseHandler):
 class CheckUsernameHandler(BaseHandler):
     @gen.coroutine
     def post(self):
-        data = self.request.body
-        username = unquote(re.findall('username=([^&]*)', data)[0])
+        data = self.request.arguments
+        username = data['username'][0]
         result = yield model.check_username(
-            self.application.mysql_db, username
+            self.application.db, username
             )
         self.write(result)
 
@@ -157,6 +170,6 @@ class RegisterHandler(BaseHandler):
         password = unquote(re.findall('password=([^&]*)', data)[0])
         secretcode = unquote(re.findall('secretcode=([^&]*)', data)[0])
         result = yield model.register(
-            self.application.mysql_db, username, nickname, password, secretcode
+            self.application.db, username, nickname, password, secretcode
             )
         self.write(result)
