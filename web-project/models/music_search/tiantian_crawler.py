@@ -23,7 +23,6 @@ class TiantianCrawler():
         query = urlencode({"q": query})
         uid = self.get_uid()
         api_url = "%s?%s&size=10&page=1&mid=x86_64&v=v3.4.0.2013031220&f=f320&s=s310&splus=9.100000&active=1&net=2&uid=%s" % (self.search_url, query, uid)
-        print api_url
         data = self.httpHandler.fetch(api_url)
         data = data.get("data", "{}")
         data = json.loads(data)

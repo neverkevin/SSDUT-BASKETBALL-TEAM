@@ -38,7 +38,6 @@ class NeteaseCrawler():
             "limit": 20,
             "offset": 0
         }
-        print 'test'
         data = self.httpHandler.fetch(self.base_url, post=post)
         api_data = json.loads(data['data'])
         song_list = api_data.get("result", {}).get("songs", [])
@@ -64,7 +63,6 @@ class NeteaseCrawler():
         return self.__normalize(api_result)
 
     def __normalize(self, data):
-        print data
         song_info = data.get("songs")[0]
         mp3_url = song_info["mp3Url"].replace(' ', '')
         song_list = {'0': mp3_url}
