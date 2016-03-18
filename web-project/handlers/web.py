@@ -1,13 +1,12 @@
 # /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import re
 import tornado
 from urllib import quote
-from urllib import unquote
 from tornado import gen
 from baseHandler import BaseHandler
 from operations.routes import route
+from utils.user import User
 from models import model
 from models import music
 
@@ -77,22 +76,26 @@ class AddContactsHandler(BaseHandler):
 
 @route(r'/user/\S+', name='user')
 class UserHandler(BaseHandler):
+    @gen.coroutine
     @tornado.web.authenticated
     def get(self):
         url = self.request.uri
         username = tornado.escape.xhtml_escape(self.current_user)
         if url != '/user/{}'.format(quote(username)):
             raise tornado.web.HTTPError(403)
-        user = model.get_user(
+        data = yield model.get_user(
             self.application.db, username
             )
+        user = User(data)
         self.render('user.html', url=url, username=username, user=user)
 
+    @gen.coroutine
     def post(self):
         nickname = tornado.escape.xhtml_escape(self.current_user)
         data = self.request.arguments
-        result = model.fix_user(
-            self.application.db, nickname, data
+        user = User(data)
+        result = yield model.fix_user(
+            self.application.db, nickname, user
             )
         self.write(result)
 
@@ -118,14 +121,13 @@ class LoginHandler(BaseHandler):
     @gen.coroutine
     def post(self):
         data = self.request.arguments
-        username = data['username'][0]
-        password = data['password'][0]
+        user = User(data)
         result = yield model.login(
-            self.application.db, username, password
+            self.application.db, user
             )
         if result == '1':
             nickname = yield model.get_nickname(
-                self.application.db, username
+                self.application.db, user.username
                 )
             self.set_secure_cookie("user", nickname)
         self.write(result)
@@ -135,8 +137,7 @@ class LoginHandler(BaseHandler):
 class CheckUsernameHandler(BaseHandler):
     @gen.coroutine
     def post(self):
-        data = self.request.arguments
-        username = data['username'][0]
+        username = self.get_argument('username')
         result = yield model.check_username(
             self.application.db, username
             )
@@ -163,11 +164,10 @@ class RegisterHandler(BaseHandler):
 
     @gen.coroutine
     def post(self):
-        username = self.get_argument('username')
-        nickname = self.get_argument('nickname')
-        password = self.get_argument('password')
+        data = self.request.arguments
         secretcode = self.get_argument('secretcode')
+        user = User(data)
         result = yield model.register(
-            self.application.db, username, nickname, password, secretcode
+            self.application.db, user, secretcode
             )
         self.write(result)

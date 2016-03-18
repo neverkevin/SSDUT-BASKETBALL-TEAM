@@ -30,13 +30,13 @@ def add_contacts(db, name, grade, phonenum, place):
 
 
 @gen.coroutine
-def login(db, username, password):
+def login(db, user):
     usernameSQL = "select username from user where username=%s"
-    is_username_exist = db.get(usernameSQL, username)
+    is_username_exist = db.get(usernameSQL, user.username)
     if is_username_exist is not None:
         passwdSQL = "select password from user where username=%s"
-        password = md5(password)
-        getpassword = db.get(passwdSQL, username)
+        password = md5(user.password)
+        getpassword = db.get(passwdSQL, user.username)
         if getpassword["password"] == password:
             return '1'
         return "密码错误！"
@@ -51,17 +51,17 @@ def get_nickname(db, username):
 
 
 @gen.coroutine
-def register(db, username, nickname, password, secretcode):
+def register(db, user, secretcode):
     if secretcode != "secret":
         return "0"
     usernameSQL = "select username from user where username=%s"
-    is_username_exist = db.get(usernameSQL, username)
+    is_username_exist = db.get(usernameSQL, user.username)
     if is_username_exist:
         return "-1"
-    password = md5(password)
+    password = md5(user.password)
     sql = "INSERT INTO user (username, nickname, password) \
             VALUES (%s, %s, %s)"
-    db.insert(sql, username, nickname, password)
+    db.insert(sql, user.username, user.nickname, password)
     return "1"
 
 
@@ -74,15 +74,14 @@ def check_username(db, username):
     return '1'
 
 
-def fix_user(db, nickname, data):
-    grade = data['grade'][0]
-    phonenum = data['phonenum'][0]
-    place = data['place'][0]
+@gen.coroutine
+def fix_user(db, nickname, user):
     sql = 'update user set grade=%s, phonenum=%s, place=%s where nickname=%s'
-    result = db.update(sql, grade, phonenum, place, nickname)
+    result = db.update(sql, user.grade, user.phonenum, user.place, nickname)
     return str(result)
 
 
+@gen.coroutine
 def get_user(db, nickname):
     sql = 'select * from user where nickname=%s'
     result = db.get(sql, nickname)
