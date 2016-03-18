@@ -1,5 +1,5 @@
 function getHTML() {
-    var username = $('#inputEmail').val(string);
+    var username = $('#inputEmail').val();
     var password = $('#inputPassword').val();
     if (username=='') {
         $('p#p-err').html('请输入账号!');

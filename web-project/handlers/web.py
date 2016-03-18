@@ -6,6 +6,7 @@ from urllib import quote
 from tornado import gen
 from baseHandler import BaseHandler
 from operations.routes import route
+from utils.contacts import Contacts
 from utils.user import User
 from models import model
 from models import music
@@ -64,12 +65,10 @@ class AddContactsHandler(BaseHandler):
     @gen.coroutine
     @tornado.web.authenticated
     def post(self):
-        name = self.get_argument('name')
-        grade = self.get_argument('grade')
-        phonenum = self.get_argument('phonenum')
-        place = self.get_argument('place')
+        data = self.request.arguments
+        contacts = Contacts(data)
         yield model.add_contacts(
-            self.application.db, name, grade, phonenum, place
+            self.application.db, contacts
             )
         self.redirect('/HallofFame', permanent=True)
 

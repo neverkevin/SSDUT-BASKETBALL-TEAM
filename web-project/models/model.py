@@ -23,10 +23,12 @@ def get_contacts(db):
 
 
 @gen.coroutine
-def add_contacts(db, name, grade, phonenum, place):
+def add_contacts(db, contacts):
     sql = "insert into contacts (name, grade, phonenum, place) \
             values (%s, %s, %s, %s)"
-    db.insert(sql, name, grade, phonenum, place.encode('utf8'))
+    db.insert(
+        sql, contacts.name, contacts.grade, contacts.phonenum, contacts.place
+        )
 
 
 @gen.coroutine
