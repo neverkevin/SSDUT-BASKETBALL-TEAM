@@ -35,7 +35,7 @@ class HallofFameHandler(BaseHandler):
     def get(self):
         url = self.request.uri
         contacts, total_contacts = yield model.get_contacts(
-            self.application.db
+            self.db
             )
         username = tornado.escape.xhtml_escape(self.current_user)
         self.render(
@@ -68,7 +68,7 @@ class AddContactsHandler(BaseHandler):
         data = self.request.arguments
         contacts = Contacts(data)
         yield model.add_contacts(
-            self.application.db, contacts
+            self.db, contacts
             )
         self.redirect('/HallofFame', permanent=True)
 
@@ -94,7 +94,7 @@ class UserHandler(BaseHandler):
         data = self.request.arguments
         user = User(data)
         result = yield model.fix_user(
-            self.application.db, nickname, user
+            self.db, nickname, user
             )
         self.write(result)
 
@@ -123,11 +123,11 @@ class LoginHandler(BaseHandler):
         data = self.request.arguments
         user = User(data)
         result = yield model.login(
-            self.application.db, user
+            self.db, user
             )
         if result == '1':
             nickname = yield model.get_nickname(
-                self.application.db, user.username
+                self.db, user.username
                 )
             self.set_secure_cookie("user", nickname)
         self.write(result)
@@ -139,7 +139,7 @@ class CheckUsernameHandler(BaseHandler):
     def post(self):
         username = self.get_argument('username')
         result = yield model.check_username(
-            self.application.db, username
+            self.db, username
             )
         self.write(result)
 
@@ -168,6 +168,6 @@ class RegisterHandler(BaseHandler):
         secretcode = self.get_argument('secretcode')
         user = User(data)
         result = yield model.register(
-            self.application.db, user, secretcode
+            self.db, user, secretcode
             )
         self.write(result)
