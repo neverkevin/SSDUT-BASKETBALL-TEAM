@@ -104,9 +104,10 @@ class MusicHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         url = self.request.uri
-        if url != '/Music':
+        if url == '/Music':
+            songs = music.query('mylove')
+        else:
             songs = music.query(self.get_argument('song'))
-        songs = music.query('mylove')
         username = tornado.escape.xhtml_escape(self.current_user)
         self.render('Music.html', username=username, url=url, songs=songs)
 
