@@ -18,7 +18,7 @@ class MainHandler(BaseHandler):
         url = self.request.uri
         if not self.get_secure_cookie("user"):
             self.render('index.html', url=url, username="登录")
-        username = tornado.escape.xhtml_escape(self.current_user)
+        username = self.current_user
         self.render('index.html', url=url, username=username)
 
 
@@ -37,7 +37,7 @@ class HallofFameHandler(BaseHandler):
         contacts, total_contacts = yield model.get_contacts(
             self.db
             )
-        username = tornado.escape.xhtml_escape(self.current_user)
+        username = self.current_user
         self.render(
             'HallofFame.html', contacts=contacts, url=url,
             username=username, total_contacts=total_contacts
@@ -53,7 +53,7 @@ class HistoryHandler(BaseHandler):
                 'history.html', history_id=history_id,
                 url=url, username="登录"
             )
-        username = tornado.escape.xhtml_escape(self.current_user)
+        username = self.current_user
         self.render(
             'history.html', history_id=history_id,
             url=url, username=username
@@ -83,7 +83,7 @@ class UserHandler(BaseHandler):
         if url != '/user/{}'.format(quote(username)):
             raise tornado.web.HTTPError(403)
         data = yield model.get_user(
-            self.application.db, username
+            self.db, username
             )
         user = User(data)
         self.render('user.html', url=url, username=username, user=user)
@@ -108,7 +108,7 @@ class MusicHandler(BaseHandler):
             songs = music.query('mylove')
         else:
             songs = music.query(self.get_argument('song'))
-        username = tornado.escape.xhtml_escape(self.current_user)
+        username = self.current_user
         self.render('Music.html', username=username, url=url, songs=songs)
 
 
@@ -157,7 +157,7 @@ class RegisterHandler(BaseHandler):
         url = self.request.uri
         if not self.get_secure_cookie("user"):
             self.render('register.html', url=url, username="登录", error=None)
-        username = tornado.escape.xhtml_escape(self.current_user)
+        username = self.current_user
         self.render(
             'register.html', url=url, username=username, error=None
             )
